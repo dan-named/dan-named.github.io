@@ -1,13 +1,13 @@
 /**
- * VS Code-Style Binary Matrix Rain Background
- * Mathematical design pattern with ASCII art logo formation
+ * Advanced Mathematical Art Background System
+ * Complex flowing forms with gradient character distribution
  * 
  * Features:
- * - Dynamic binary matrix rain effect
- * - Dan AI logo formation using ASCII art
- * - Performance-optimized Canvas rendering
- * - Responsive grid calculation
- * - Accessibility support
+ * - Organic flowing forms using metaball physics
+ * - Gradient character distribution: * (center) → # (mid) → % (edge)
+ * - Dynamic color system with smooth HSL transitions
+ * - Performance-optimized with spatial calculations
+ * - Dan AI logo integration as attractor point
  */
 
 class MatrixBackground {
@@ -24,44 +24,42 @@ class MatrixBackground {
         // Animation and timing
         this.time = 0;
         this.lastUpdate = 0;
-        this.fps = 60;
+        this.deltaTime = 0;
+        
+        // Core systems
+        this.grid = [];
+        this.flowingForms = [];
+        this.logoAttractor = null;
+        this.offscreenCanvas = null;
+        this.offscreenCtx = null;
+        
+        // Performance monitoring
         this.fpsMonitor = {
             frames: 0,
             lastTime: performance.now(),
             currentFps: 60
         };
         
-        // Grid data structure
-        this.grid = [];
-        this.offscreenCanvas = null;
-        this.offscreenCtx = null;
-        
         // Configuration
         this.config = {
-            changeRate: 0.005,           // 0.5% chance per frame
-            binaryProbability: 0.7,      // 70% binary, 30% ASCII
-            logoGlowIntensity: 5,        // Glow blur radius
-            backgroundOpacity: 0.95,     // Trail effect opacity
-            updateInterval: 16           // ~60fps
+            numForms: 4,                 // Number of flowing forms
+            updateInterval: 16,          // ~60fps
+            formSpeed: 0.5,             // Movement speed
+            attractorStrength: 50,       // Logo attraction force
+            noiseScale: 0.003,          // Perlin noise scale
+            colorShiftSpeed: 0.1,       // Color change rate
+            transitionSmoothness: 0.15   // Character transition width
         };
         
         // Check for reduced motion preference
         this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (this.reducedMotion) {
-            this.config.changeRate = 0.001;     // Much slower updates
-            this.config.updateInterval = 100;   // Lower FPS
+            this.config.formSpeed *= 0.3;
+            this.config.colorShiftSpeed *= 0.5;
+            this.config.updateInterval = 33; // 30fps
         }
         
-        // Color system
-        this.colors = {
-            background: '#0a0a0a',
-            binary: 'rgba(0, 215, 255, 0.15)',
-            logo: '#00d4ff',
-            highlight: '#ffffff',
-            logoGlow: '#00d4ff'
-        };
-        
-        // Dan AI ASCII Logo Pattern
+        // Dan AI ASCII Logo Pattern (simplified for attractor)
         this.logoPattern = [
             "    ██████    ",
             "  ██████████  ",
@@ -76,16 +74,16 @@ class MatrixBackground {
         ];
         
         this.init();
+        this.initializeNoise();
         this.createOffscreenCanvas();
         this.calculateGrid();
         this.initializeGrid();
+        this.initializeFlowingForms();
+        this.initializeLogoAttractor();
         this.animate();
         
         // Event listeners
         window.addEventListener('resize', this.debounce(() => this.handleResize(), 250));
-        
-        // Performance monitoring
-        this.monitorPerformance();
     }
     
     init() {
@@ -96,6 +94,75 @@ class MatrixBackground {
         this.ctx.textBaseline = 'top';
         this.ctx.textAlign = 'left';
         this.ctx.font = `${this.charHeight - 2}px "SF Mono", "Monaco", "Inconsolata", "Consolas", monospace`;
+    }
+    
+    // Simplified Perlin noise implementation
+    initializeNoise() {
+        // Create permutation table for Perlin noise
+        this.permutation = [];
+        for (let i = 0; i < 256; i++) {
+            this.permutation[i] = i;
+        }
+        
+        // Shuffle permutation table
+        for (let i = 255; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.permutation[i], this.permutation[j]] = [this.permutation[j], this.permutation[i]];
+        }
+        
+        // Duplicate for easy overflow handling
+        for (let i = 0; i < 256; i++) {
+            this.permutation[256 + i] = this.permutation[i];
+        }
+    }
+    
+    // Perlin noise function
+    noise3D(x, y, z) {
+        const X = Math.floor(x) & 255;
+        const Y = Math.floor(y) & 255;
+        const Z = Math.floor(z) & 255;
+        
+        x -= Math.floor(x);
+        y -= Math.floor(y);
+        z -= Math.floor(z);
+        
+        const u = this.fade(x);
+        const v = this.fade(y);
+        const w = this.fade(z);
+        
+        const A = this.permutation[X] + Y;
+        const AA = this.permutation[A] + Z;
+        const AB = this.permutation[A + 1] + Z;
+        const B = this.permutation[X + 1] + Y;
+        const BA = this.permutation[B] + Z;
+        const BB = this.permutation[B + 1] + Z;
+        
+        return this.lerp(w,
+            this.lerp(v,
+                this.lerp(u, this.grad(this.permutation[AA], x, y, z),
+                             this.grad(this.permutation[BA], x - 1, y, z)),
+                this.lerp(u, this.grad(this.permutation[AB], x, y - 1, z),
+                             this.grad(this.permutation[BB], x - 1, y - 1, z))),
+            this.lerp(v,
+                this.lerp(u, this.grad(this.permutation[AA + 1], x, y, z - 1),
+                             this.grad(this.permutation[BA + 1], x - 1, y, z - 1)),
+                this.lerp(u, this.grad(this.permutation[AB + 1], x, y - 1, z - 1),
+                             this.grad(this.permutation[BB + 1], x - 1, y - 1, z - 1))));
+    }
+    
+    fade(t) {
+        return t * t * t * (t * (t * 6 - 15) + 10);
+    }
+    
+    lerp(t, a, b) {
+        return a + t * (b - a);
+    }
+    
+    grad(hash, x, y, z) {
+        const h = hash & 15;
+        const u = h < 8 ? x : y;
+        const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+        return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
     }
     
     createOffscreenCanvas() {
@@ -119,12 +186,19 @@ class MatrixBackground {
         for (let row = 0; row < this.rows; row++) {
             this.grid[row] = [];
             for (let col = 0; col < this.columns; col++) {
+                const x = col * this.charWidth;
+                const y = row * this.charHeight;
+                
                 this.grid[row][col] = {
-                    char: this.getRandomCharacter(),
-                    type: 'binary',
-                    opacity: Math.random() * 0.3 + 0.1,
+                    char: Math.random() < 0.5 ? '0' : '1',
+                    x: x,
+                    y: y,
+                    col: col,
+                    row: row,
+                    influence: 0,
+                    color: '#004466',
                     lastUpdate: 0,
-                    pulsePhase: Math.random() * Math.PI * 2
+                    noiseOffset: Math.random() * 1000
                 };
             }
         }
@@ -152,80 +226,172 @@ class MatrixBackground {
                     const logoChar = this.logoPattern[logoY][logoX];
                     
                     if (logoChar !== ' ') {
-                        this.grid[gridY][gridX] = {
-                            char: logoChar,
-                            type: 'logo',
-                            opacity: 1.0,
-                            lastUpdate: this.time,
-                            pulsePhase: Math.random() * Math.PI * 2
-                        };
+                        this.grid[gridY][gridX].char = logoChar;
+                        this.grid[gridY][gridX].isLogo = true;
+                        this.grid[gridY][gridX].color = '#00d4ff';
                     }
                 }
             }
         }
     }
     
-    getRandomCharacter() {
-        if (Math.random() < this.config.binaryProbability) {
-            return Math.random() < 0.5 ? '0' : '1';
-        } else {
-            const asciiChars = ['*', '#', '=', '%', '-', '+', 'x', '~', '|', '/', '\\'];
-            return asciiChars[Math.floor(Math.random() * asciiChars.length)];
+    initializeFlowingForms() {
+        this.flowingForms = [];
+        
+        for (let i = 0; i < this.config.numForms; i++) {
+            const form = new FlowingForm(
+                Math.random() * this.canvas.width,
+                Math.random() * this.canvas.height,
+                100 + Math.random() * 150,  // radius
+                this.config.formSpeed * (0.5 + Math.random()),
+                Math.random() * 360,        // color hue
+                Math.random() * 1000        // noise offset
+            );
+            
+            this.flowingForms.push(form);
         }
     }
     
-    updateGrid() {
-        const currentTime = this.time;
+    initializeLogoAttractor() {
+        const centerX = (this.columns / 2) * this.charWidth;
+        const centerY = (this.rows / 2) * this.charHeight;
         
+        this.logoAttractor = new LogoAttractor(
+            { x: centerX, y: centerY },
+            this.config.attractorStrength
+        );
+    }
+    
+    updateFlowingForms() {
+        this.flowingForms.forEach(form => {
+            // Update position using Perlin noise
+            form.updatePosition(this.time, this.config.noiseScale, this.canvas.width, this.canvas.height);
+            
+            // Apply logo attraction
+            if (this.logoAttractor) {
+                this.logoAttractor.attractForm(form, this.deltaTime);
+            }
+            
+            // Update color hue
+            form.colorHue = (form.colorHue + this.config.colorShiftSpeed * this.deltaTime * 0.01) % 360;
+        });
+    }
+    
+    calculateInfluenceGrid() {
+        // Reset all influences
+        for (let row = 0; row < this.rows; row++) {
+            for (let col = 0; col < this.columns; col++) {
+                this.grid[row][col].influence = 0;
+            }
+        }
+        
+        // Calculate influence from each form
+        this.flowingForms.forEach(form => {
+            const startCol = Math.max(0, Math.floor((form.x - form.radius) / this.charWidth));
+            const endCol = Math.min(this.columns - 1, Math.floor((form.x + form.radius) / this.charWidth));
+            const startRow = Math.max(0, Math.floor((form.y - form.radius) / this.charHeight));
+            const endRow = Math.min(this.rows - 1, Math.floor((form.y + form.radius) / this.charHeight));
+            
+            for (let row = startRow; row <= endRow; row++) {
+                for (let col = startCol; col <= endCol; col++) {
+                    const cell = this.grid[row][col];
+                    const influence = form.calculateInfluence(cell.x + this.charWidth/2, cell.y + this.charHeight/2);
+                    
+                    // Take maximum influence from all forms
+                    cell.influence = Math.max(cell.influence, influence);
+                    
+                    // Store dominant form for color calculations
+                    if (influence > 0.1) {
+                        cell.dominantForm = form;
+                    }
+                }
+            }
+        });
+    }
+    
+    updateGridCharactersAndColors() {
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.columns; col++) {
                 const cell = this.grid[row][col];
                 
-                // Skip logo cells for character updates
-                if (cell.type === 'logo') {
-                    // Only update pulse phase for logo cells
-                    cell.pulsePhase += 0.02;
+                // Skip logo cells
+                if (cell.isLogo) {
+                    cell.color = `hsl(180, 100%, ${70 + Math.sin(this.time * 0.005) * 10}%)`;
                     continue;
                 }
                 
-                // Random character updates
-                if (Math.random() < this.config.changeRate) {
-                    cell.char = this.getRandomCharacter();
-                    cell.lastUpdate = currentTime;
-                    cell.opacity = Math.random() * 0.4 + 0.1;
+                // Calculate character based on influence with noise for smooth transitions
+                const noiseValue = this.noise3D(
+                    col * 0.1, 
+                    row * 0.1, 
+                    this.time * 0.001
+                ) * 0.5 + 0.5;
+                
+                const adjustedInfluence = cell.influence + (noiseValue - 0.5) * this.config.transitionSmoothness;
+                
+                // Determine character based on influence
+                if (adjustedInfluence > 0.7) {
+                    cell.char = '*';
+                } else if (adjustedInfluence > 0.3) {
+                    cell.char = '#';
+                } else if (adjustedInfluence > 0.1) {
+                    cell.char = '%';
+                } else {
+                    // Dynamic binary background
+                    const binaryNoise = this.noise3D(
+                        col * 0.05 + this.time * 0.0001,
+                        row * 0.05,
+                        this.time * 0.0002
+                    );
+                    
+                    if (Math.abs(binaryNoise) > 0.4) {
+                        cell.char = Math.random() < 0.5 ? '0' : '1';
+                    }
                 }
                 
-                // Update pulse phase for visual interest
-                cell.pulsePhase += 0.01;
-                
-                // Occasional highlight effect
-                if (Math.random() < 0.0001) { // Very rare highlights
-                    cell.type = 'highlight';
-                    cell.opacity = 1.0;
-                    setTimeout(() => {
-                        if (cell.type === 'highlight') {
-                            cell.type = 'binary';
-                            cell.opacity = Math.random() * 0.3 + 0.1;
-                        }
-                    }, 1000 + Math.random() * 2000);
-                }
+                // Calculate color
+                cell.color = this.calculateCellColor(cell, adjustedInfluence);
             }
         }
     }
     
+    calculateCellColor(cell, influence) {
+        if (cell.char === '*') {
+            // Center: Bright, saturated colors that shift
+            const baseHue = cell.dominantForm ? cell.dominantForm.colorHue : 180;
+            const hue = (baseHue + this.time * 0.01 + influence * 60) % 360;
+            return `hsl(${hue}, 85%, 75%)`;
+            
+        } else if (cell.char === '#') {
+            // Mid-range: Medium saturation with color mixing
+            const baseHue = cell.dominantForm ? cell.dominantForm.colorHue : 180;
+            const hue = (baseHue + this.time * 0.005 + influence * 30) % 360;
+            return `hsl(${hue}, 70%, 55%)`;
+            
+        } else if (cell.char === '%') {
+            // Edge: Subtle colors, lower saturation
+            const baseHue = cell.dominantForm ? cell.dominantForm.colorHue : 180;
+            const hue = (baseHue + this.time * 0.002 + influence * 15) % 360;
+            return `hsl(${hue}, 50%, 35%)`;
+            
+        } else {
+            // Binary background: Cyan tones with subtle variation
+            const noiseVariation = this.noise3D(cell.col * 0.1, cell.row * 0.1, this.time * 0.001) * 20;
+            const lightness = 15 + Math.abs(noiseVariation);
+            return `hsl(${180 + noiseVariation}, 90%, ${lightness}%)`;
+        }
+    }
+    
     render() {
-        // Clear offscreen canvas with slight trail effect
-        this.offscreenCtx.fillStyle = this.colors.background;
+        // Clear offscreen canvas with dark background
+        this.offscreenCtx.fillStyle = '#0a0a0a';
         this.offscreenCtx.fillRect(0, 0, this.offscreenCanvas.width, this.offscreenCanvas.height);
         
         // Render all characters
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.columns; col++) {
                 const cell = this.grid[row][col];
-                const x = col * this.charWidth;
-                const y = row * this.charHeight;
-                
-                this.renderCharacter(cell, x, y);
+                this.renderCharacter(cell);
             }
         }
         
@@ -234,40 +400,28 @@ class MatrixBackground {
         this.ctx.drawImage(this.offscreenCanvas, 0, 0);
     }
     
-    renderCharacter(cell, x, y) {
+    renderCharacter(cell) {
         const ctx = this.offscreenCtx;
-        let fillStyle, shadowBlur = 0, shadowColor = 'transparent';
         
-        // Calculate pulsing opacity
-        const pulseEffect = 0.8 + Math.sin(cell.pulsePhase) * 0.2;
-        const finalOpacity = cell.opacity * pulseEffect;
+        // Set color and glow effects
+        ctx.fillStyle = cell.color;
         
-        switch (cell.type) {
-            case 'logo':
-                fillStyle = this.colors.logo;
-                shadowBlur = this.config.logoGlowIntensity;
-                shadowColor = this.colors.logoGlow;
-                break;
-                
-            case 'highlight':
-                fillStyle = this.colors.highlight;
-                shadowBlur = 3;
-                shadowColor = this.colors.highlight;
-                break;
-                
-            default: // binary
-                const alpha = Math.max(0.05, Math.min(0.3, finalOpacity));
-                fillStyle = `rgba(0, 215, 255, ${alpha})`;
-                break;
+        // Add glow for high-influence characters
+        if (cell.char === '*') {
+            ctx.shadowColor = cell.color;
+            ctx.shadowBlur = 8;
+        } else if (cell.char === '#') {
+            ctx.shadowColor = cell.color;
+            ctx.shadowBlur = 4;
+        } else if (cell.isLogo) {
+            ctx.shadowColor = cell.color;
+            ctx.shadowBlur = 6;
+        } else {
+            ctx.shadowBlur = 0;
         }
         
-        // Apply shadow/glow effect
-        ctx.shadowColor = shadowColor;
-        ctx.shadowBlur = shadowBlur;
-        ctx.fillStyle = fillStyle;
-        
         // Render character
-        ctx.fillText(cell.char, x, y);
+        ctx.fillText(cell.char, cell.x, cell.y);
         
         // Reset shadow
         ctx.shadowBlur = 0;
@@ -275,15 +429,19 @@ class MatrixBackground {
     
     animate() {
         const currentTime = performance.now();
+        this.deltaTime = currentTime - this.lastUpdate;
         
         // FPS control
-        if (currentTime - this.lastUpdate >= this.config.updateInterval) {
+        if (this.deltaTime >= this.config.updateInterval) {
             this.time = currentTime;
-            this.updateGrid();
-            this.render();
-            this.lastUpdate = currentTime;
             
-            // FPS monitoring
+            // Update all systems
+            this.updateFlowingForms();
+            this.calculateInfluenceGrid();
+            this.updateGridCharactersAndColors();
+            this.render();
+            
+            this.lastUpdate = currentTime;
             this.updateFPSMonitor(currentTime);
         }
         
@@ -300,18 +458,11 @@ class MatrixBackground {
             
             // Adaptive performance adjustment
             if (this.fpsMonitor.currentFps < 30) {
-                this.config.updateInterval = Math.min(32, this.config.updateInterval + 2);
+                this.config.updateInterval = Math.min(33, this.config.updateInterval + 2);
             } else if (this.fpsMonitor.currentFps > 55) {
                 this.config.updateInterval = Math.max(12, this.config.updateInterval - 1);
             }
         }
-    }
-    
-    monitorPerformance() {
-        // Performance monitoring for debugging
-        setInterval(() => {
-            console.log(`Matrix FPS: ${this.fpsMonitor.currentFps}, Update Interval: ${this.config.updateInterval}ms`);
-        }, 5000);
     }
     
     handleResize() {
@@ -323,16 +474,12 @@ class MatrixBackground {
         this.createOffscreenCanvas();
         
         // Recalculate grid
-        const oldColumns = this.columns;
-        const oldRows = this.rows;
         this.calculateGrid();
+        this.initializeGrid();
+        this.initializeFlowingForms();
+        this.initializeLogoAttractor();
         
-        // Only reinitialize if dimensions changed significantly
-        if (Math.abs(this.columns - oldColumns) > 2 || Math.abs(this.rows - oldRows) > 2) {
-            this.initializeGrid();
-        }
-        
-        // Update font size for new context
+        // Update font
         this.ctx.font = `${this.charHeight - 2}px "SF Mono", "Monaco", "Inconsolata", "Consolas", monospace`;
         this.offscreenCtx.font = `${this.charHeight - 2}px "SF Mono", "Monaco", "Inconsolata", "Consolas", monospace`;
     }
@@ -349,20 +496,77 @@ class MatrixBackground {
             timeout = setTimeout(later, wait);
         };
     }
-    
-    // Public API for external control
-    updateConfig(newConfig) {
-        this.config = { ...this.config, ...newConfig };
+}
+
+// FlowingForm class for metaball physics
+class FlowingForm {
+    constructor(x, y, radius, speed, colorHue, noiseOffset) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speed = speed;
+        this.colorHue = colorHue;
+        this.noiseOffset = noiseOffset;
+        this.velocityX = 0;
+        this.velocityY = 0;
     }
     
-    updateColors(newColors) {
-        this.colors = { ...this.colors, ...newColors };
+    updatePosition(time, noiseScale, canvasWidth, canvasHeight) {
+        // Use Perlin noise for smooth, organic movement
+        const noiseX = Math.sin(time * 0.001 + this.noiseOffset) * this.speed;
+        const noiseY = Math.cos(time * 0.001 + this.noiseOffset + 100) * this.speed;
+        
+        this.velocityX = noiseX * 0.1 + this.velocityX * 0.9;
+        this.velocityY = noiseY * 0.1 + this.velocityY * 0.9;
+        
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+        
+        // Soft boundary wrapping
+        if (this.x < -this.radius) this.x = canvasWidth + this.radius;
+        if (this.x > canvasWidth + this.radius) this.x = -this.radius;
+        if (this.y < -this.radius) this.y = canvasHeight + this.radius;
+        if (this.y > canvasHeight + this.radius) this.y = -this.radius;
     }
     
-    // Clean up resources
-    destroy() {
-        window.removeEventListener('resize', this.handleResize);
-        // Stop animation loop would require additional tracking
+    calculateInfluence(gridX, gridY) {
+        const dx = gridX - this.x;
+        const dy = gridY - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Metaball equation with smooth falloff
+        if (distance < this.radius) {
+            const normalizedDistance = distance / this.radius;
+            return 1 - (normalizedDistance * normalizedDistance);
+        }
+        
+        return 0;
+    }
+}
+
+// LogoAttractor class for gravitational effects
+class LogoAttractor {
+    constructor(center, strength) {
+        this.center = center;
+        this.strength = strength;
+        this.pulsePhase = 0;
+    }
+    
+    attractForm(form, deltaTime) {
+        const dx = this.center.x - form.x;
+        const dy = this.center.y - form.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Only attract if far enough from logo
+        if (distance > 100) {
+            const force = this.strength / (distance * distance + 1000);
+            const pulseMultiplier = 1 + Math.sin(this.pulsePhase) * 0.1;
+            
+            form.x += (dx / distance) * force * deltaTime * 0.001 * pulseMultiplier;
+            form.y += (dy / distance) * force * deltaTime * 0.001 * pulseMultiplier;
+        }
+        
+        this.pulsePhase += deltaTime * 0.001;
     }
 }
 
