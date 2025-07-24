@@ -24,46 +24,58 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
+    
     <style>
-        /* CSS Variables - Cyberpunk Color System */
+        /* CSS Variables - Enhanced Design System */
         :root {
-            /* Golden Ratio */
+            /* Mathematical Constants */
             --golden-ratio: 1.618;
             --golden-ratio-inverse: 0.618;
+            --phi: 1.618033988749;
             
-            /* Primary Colors */
+            /* Primary Colors - Cyberpunk Enhanced */
             --purple-primary: #6B46C1;
             --purple-secondary: #8B5CF6;
             --purple-accent: #A855F7;
+            --purple-dark: #4C1D95;
             
             /* Neon Accents */
             --cyan-neon: #00FFFF;
             --magenta-neon: #FF00FF;
             --green-neon: #39FF14;
+            --blue-neon: #0080FF;
             
-            /* Dark Background */
+            /* Background System */
             --bg-primary: #0F0F23;
             --bg-secondary: #1E1E3F;
             --bg-tertiary: #2D2D5F;
+            --bg-overlay: rgba(15, 15, 35, 0.85);
             
             /* Text Colors */
             --text-primary: #FFFFFF;
             --text-secondary: #B8B8FF;
             --text-muted: #8A8AE5;
+            --text-accent: #E0E7FF;
             
-            /* Spacing based on Fibonacci sequence */
-            --space-xs: 0.5rem;    /* 8px */
-            --space-sm: 0.8125rem; /* 13px */
-            --space-md: 1.3125rem; /* 21px */
-            --space-lg: 2.125rem;  /* 34px */
-            --space-xl: 3.4375rem; /* 55px */
-            --space-xxl: 5.5625rem; /* 89px */
+            /* Fibonacci Spacing System */
+            --space-xs: 0.5rem;      /* 8px */
+            --space-sm: 0.8125rem;   /* 13px */
+            --space-md: 1.3125rem;   /* 21px */
+            --space-lg: 2.125rem;    /* 34px */
+            --space-xl: 3.4375rem;   /* 55px */
+            --space-xxl: 5.5625rem;  /* 89px */
             
-            /* Container widths */
-            --container-sm: 320px;
-            --container-md: 768px;
-            --container-lg: 1200px;
-            --container-max: 1400px;
+            /* Fixed Content Box */
+            --content-max-width: 800px;
+            --content-padding: var(--space-lg);
+            
+            /* Animation Timing */
+            --animation-fast: 0.2s;
+            --animation-medium: 0.4s;
+            --animation-slow: 0.8s;
         }
         
         /* Reset and Base Styles */
@@ -75,6 +87,7 @@
         
         html {
             scroll-behavior: smooth;
+            height: 100%;
         }
         
         body {
@@ -84,62 +97,55 @@
             line-height: calc(1 * var(--golden-ratio));
             overflow-x: hidden;
             min-height: 100vh;
-        }
-        
-        /* Mathematical Grid System */
-        .container {
-            width: 100%;
-            max-width: var(--container-max);
-            margin: 0 auto;
-            padding: 0 var(--space-md);
             position: relative;
-            z-index: 2;
         }
         
-        .grid {
-            display: grid;
-            gap: var(--space-lg);
-        }
-        
-        .grid-2 {
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        }
-        
-        .grid-3 {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        }
-        
-        /* Dynamic Background */
-        .cyberpunk-bg {
+        /* Mathematical Art Background Canvas */
+        #math-canvas {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: 1;
             pointer-events: none;
-            overflow: hidden;
         }
         
-        .geometric-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(107, 70, 193, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
-            animation: pulseOverlay 8s ease-in-out infinite;
+        /* Fixed Content Container */
+        .content-container {
+            position: relative;
+            z-index: 10;
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--content-padding);
+            background: var(--bg-overlay);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px rgba(0, 255, 255, 0.1);
         }
         
-        @keyframes pulseOverlay {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.05); }
+        /* Content Sections */
+        .content-section {
+            margin-bottom: var(--space-xxl);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all var(--animation-slow) ease;
         }
         
-        /* Typography */
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .content-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Typography System */
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Orbitron', monospace;
             font-weight: 700;
@@ -156,17 +162,31 @@
             background-clip: text;
             text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
             animation: textGlow 3s ease-in-out infinite alternate;
+            text-align: center;
+            margin-bottom: var(--space-lg);
         }
         
         @keyframes textGlow {
-            from { filter: brightness(1); }
-            to { filter: brightness(1.2); }
+            from { filter: brightness(1) drop-shadow(0 0 10px rgba(0, 255, 255, 0.3)); }
+            to { filter: brightness(1.2) drop-shadow(0 0 20px rgba(0, 255, 255, 0.6)); }
         }
         
         h2 {
             font-size: clamp(1.8rem, 5vw, 2.5rem);
             color: var(--purple-accent);
             margin-bottom: var(--space-lg);
+            position: relative;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyan-neon), var(--magenta-neon));
+            border-radius: 2px;
         }
         
         h3 {
@@ -184,21 +204,21 @@
         
         /* Navigation */
         nav {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
+            z-index: 100;
             background: rgba(15, 15, 35, 0.95);
             backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid var(--purple-primary);
+            border-radius: 15px;
+            margin-bottom: var(--space-xl);
+            border: 1px solid var(--purple-primary);
         }
         
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: var(--space-sm) var(--space-md);
+            padding: var(--space-sm) var(--space-lg);
         }
         
         .logo {
@@ -219,53 +239,16 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all var(--animation-fast) ease;
             position: relative;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: 8px;
         }
         
         .nav-links a:hover {
             color: var(--cyan-neon);
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--cyan-neon);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        /* Sections */
-        section {
-            padding: var(--space-xxl) 0;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding-top: calc(var(--space-xxl) + 60px);
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .hero p {
-            font-size: clamp(1.125rem, 3vw, 1.5rem);
-            margin-bottom: var(--space-xl);
-            color: var(--text-secondary);
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
         
         /* Buttons */
@@ -275,13 +258,14 @@
             background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
             color: var(--text-primary);
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: 600;
             font-size: 1.125rem;
-            transition: all 0.3s ease;
+            transition: all var(--animation-medium) ease;
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
         
         .btn::before {
@@ -300,8 +284,8 @@
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(107, 70, 193, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(107, 70, 193, 0.4);
             border-color: var(--cyan-neon);
         }
         
@@ -318,14 +302,15 @@
         
         /* Cards */
         .card {
-            background: rgba(30, 30, 63, 0.8);
+            background: rgba(30, 30, 63, 0.6);
             border: 1px solid var(--purple-primary);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: var(--space-xl);
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            transition: all var(--animation-medium) ease;
             position: relative;
             overflow: hidden;
+            margin-bottom: var(--space-lg);
         }
         
         .card::before {
@@ -338,7 +323,7 @@
             background: linear-gradient(90deg, var(--cyan-neon), var(--magenta-neon), var(--green-neon));
             transform: scaleX(0);
             transform-origin: left;
-            transition: transform 0.3s ease;
+            transition: transform var(--animation-medium) ease;
         }
         
         .card:hover::before {
@@ -348,17 +333,102 @@
         .card:hover {
             transform: translateY(-5px);
             border-color: var(--cyan-neon);
-            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.15);
+        }
+        
+        /* Grid System */
+        .grid {
+            display: grid;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+            margin: var(--space-md) 0;
+        }
+        
+        .feature-list li {
+            padding: var(--space-xs) 0;
+            color: var(--text-secondary);
+            position: relative;
+            padding-left: var(--space-lg);
+        }
+        
+        .feature-list li::before {
+            content: '✦';
+            color: var(--cyan-neon);
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: var(--space-xs);
+        }
+        
+        /* Loading States */
+        .loading {
+            text-align: center;
+            padding: var(--space-xl);
+            color: var(--text-muted);
+        }
+        
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--purple-primary);
+            border-top: 2px solid var(--cyan-neon);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: var(--space-sm);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: var(--space-xxl) 0;
+            margin-bottom: var(--space-xxl);
+        }
+        
+        .hero p {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            margin-bottom: var(--space-xl);
+            color: var(--text-accent);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: var(--space-xl);
         }
         
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .content-container {
+                margin: var(--space-md);
+                padding: var(--space-md);
+                border-radius: 15px;
             }
             
-            .hero {
-                padding-top: var(--space-xxl);
+            .nav-links {
+                display: none;
             }
             
             .grid-2,
@@ -366,8 +436,14 @@
                 grid-template-columns: 1fr;
             }
             
-            section {
-                padding: var(--space-xl) 0;
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
             }
         }
         
@@ -380,9 +456,13 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
+            
+            #math-canvas {
+                display: none;
+            }
         }
         
-        /* Focus styles for keyboard navigation */
+        /* Focus Styles */
         *:focus {
             outline: 2px solid var(--cyan-neon);
             outline-offset: 2px;
@@ -396,7 +476,8 @@
             color: var(--cyan-neon);
             padding: 8px;
             text-decoration: none;
-            z-index: 100;
+            z-index: 1000;
+            border-radius: 4px;
         }
         
         .skip-link:focus {
@@ -407,150 +488,327 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
-    <!-- Dynamic Background -->
-    <div class="cyberpunk-bg">
-        <div class="geometric-overlay"></div>
-    </div>
+    <!-- Mathematical Art Background -->
+    <canvas id="math-canvas"></canvas>
     
-    <!-- Navigation -->
-    <nav role="navigation" aria-label="Main navigation">
-        <div class="container">
+    <!-- Fixed Content Container -->
+    <div class="content-container">
+        <!-- Navigation -->
+        <nav role="navigation" aria-label="Main navigation">
             <div class="nav-container">
                 <a href="#" class="logo" aria-label="Dan Nazarov - Home">DataAI</a>
                 <ul class="nav-links">
-                    <li><a href="#expertise">Expertise</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#about" data-section="about">About</a></li>
+                    <li><a href="#portfolio" data-section="portfolio">Portfolio</a></li>
+                    <li><a href="#services" data-section="services">Services</a></li>
+                    <li><a href="#contact" data-section="contact">Contact</a></li>
                 </ul>
             </div>
-        </div>
-    </nav>
-    
-    <!-- Hero Section -->
-    <section class="hero" id="main-content">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Dan Nazarov</h1>
-                <p>Chatbot Developer & Automation Expert</p>
-                <p>Transforming events and businesses through intelligent automation and cutting-edge chatbot solutions</p>
-                <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
-                    <a href="#portfolio" class="btn">View Portfolio</a>
-                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Expertise Section -->
-    <section id="expertise">
-        <div class="container">
-            <h2>Expertise</h2>
-            <div class="grid grid-3">
-                <div class="card">
-                    <h3>Chatbot Development</h3>
-                    <p>Custom chatbot solutions for events, customer service, and business automation. Specializing in complex interaction flows and multi-platform integration.</p>
-                </div>
-                <div class="card">
-                    <h3>Event Automation</h3>
-                    <p>Comprehensive automation systems for festivals and events, including participant tracking, gift exchanges, and real-time engagement features.</p>
-                </div>
-                <div class="card">
-                    <h3>Technical Integration</h3>
-                    <p>Seamless integration of chatbots with existing systems, databases, and third-party services for enhanced functionality and user experience.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Portfolio Section -->
-    <section id="portfolio">
-        <div class="container">
-            <h2>Portfolio</h2>
-            <div class="grid grid-2">
-                <div class="card">
-                    <h3>Festival Chatbot System</h3>
-                    <p><strong>5 Festivals • 33 Kimono Tracking System</strong></p>
-                    <p>Developed a comprehensive chatbot system for multiple festivals featuring:</p>
-                    <ul style="list-style: none; padding-left: 0; margin: var(--space-md) 0;">
-                        <li>✦ 24-hour gift exchange mechanics</li>
-                        <li>✦ Real-time kimono tracking across 33 unique items</li>
-                        <li>✦ Photo integration and social sharing</li>
-                        <li>✦ Participant engagement and gamification</li>
-                        <li>✦ Multi-festival deployment and management</li>
-                    </ul>
-                    <p>Successfully managed thousands of interactions across multiple simultaneous events, demonstrating scalability and reliability in high-traffic scenarios.</p>
-                </div>
-                <div class="card">
-                    <h3>Automation Solutions</h3>
-                    <p>Custom automation systems for various industries including:</p>
-                    <ul style="list-style: none; padding-left: 0; margin: var(--space-md) 0;">
-                        <li>✦ Customer service automation</li>
-                        <li>✦ Event management systems</li>
-                        <li>✦ Data collection and processing</li>
-                        <li>✦ Integration with existing business tools</li>
-                        <li>✦ Multi-language support capabilities</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Services Section -->
-    <section id="services">
-        <div class="container">
-            <h2>Services Offered</h2>
-            <div class="grid grid-2">
-                <div class="card">
-                    <h3>Custom Chatbot Development</h3>
-                    <p>End-to-end chatbot development tailored to your specific needs. From concept to deployment, I create intelligent conversational experiences that engage users and drive results.</p>
-                </div>
-                <div class="card">
-                    <h3>Event Industry Automation</h3>
-                    <p>Specialized automation solutions for festivals, conferences, and events. Including participant management, real-time tracking, and interactive engagement systems.</p>
-                </div>
-                <div class="card">
-                    <h3>International Client Support</h3>
-                    <p>Professional services in English for international clients seeking reliable chatbot and automation solutions with proven track record and technical expertise.</p>
-                </div>
-                <div class="card">
-                    <h3>Agency Partnership</h3>
-                    <p>Collaborate with established automation agency for larger projects. Access to comprehensive development resources and multi-language support capabilities.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2>Get In Touch</h2>
-            <div class="grid grid-2">
-                <div class="card">
-                    <h3>Ready to Start Your Project?</h3>
-                    <p>Let's discuss how chatbot automation can transform your business or event. I specialize in creating custom solutions that deliver real results.</p>
-                    <div style="margin-top: var(--space-lg);">
-                        <a href="mailto:dan@dataai.com" class="btn">Email Me</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>Project Inquiry</h3>
-                    <p>Have a specific project in mind? I'd love to hear about your requirements and provide insights on how we can bring your vision to life.</p>
-                    <ul style="list-style: none; padding-left: 0; margin: var(--space-md) 0;">
-                        <li>✦ Free initial consultation</li>
-                        <li>✦ Custom solution development</li>
-                        <li>✦ Ongoing support and maintenance</li>
-                        <li>✦ International project experience</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+        </nav>
+        
+        <!-- Main Content -->
+        <main id="main-content" role="main">
+            <!-- Hero Section -->
+            <section class="hero content-section visible">
+                <div id="hero-content" class="loading">Loading hero content...</div>
+            </section>
+            
+            <!-- About Section -->
+            <section id="about" class="content-section">
+                <div id="about-content" class="loading">Loading about content...</div>
+            </section>
+            
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="content-section">
+                <div id="portfolio-content" class="loading">Loading portfolio content...</div>
+            </section>
+            
+            <!-- Services Section -->
+            <section id="services" class="content-section">
+                <div id="services-content" class="loading">Loading services content...</div>
+            </section>
+            
+            <!-- Contact Section -->
+            <section id="contact" class="content-section">
+                <div id="contact-content" class="loading">Loading contact content...</div>
+            </section>
+        </main>
+    </div>
     
     <script>
-        // Simple performance-optimized animations
+        // Mathematical Art Background System
+        class MathArt {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.width = window.innerWidth;
+                this.height = window.innerHeight;
+                this.time = 0;
+                this.particles = [];
+                this.spirals = [];
+                
+                this.init();
+                this.createSpirals();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.handleResize());
+            }
+            
+            init() {
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+                
+                // Create particles for ambient effects
+                for (let i = 0; i < 50; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.width,
+                        y: Math.random() * this.height,
+                        size: Math.random() * 2 + 1,
+                        speedX: (Math.random() - 0.5) * 0.5,
+                        speedY: (Math.random() - 0.5) * 0.5,
+                        opacity: Math.random() * 0.5 + 0.2
+                    });
+                }
+            }
+            
+            createSpirals() {
+                // Golden ratio spiral
+                this.spirals.push({
+                    centerX: this.width * 0.2,
+                    centerY: this.height * 0.3,
+                    type: 'fibonacci',
+                    scale: 0.8,
+                    rotation: 0
+                });
+                
+                // Lissajous curves
+                this.spirals.push({
+                    centerX: this.width * 0.8,
+                    centerY: this.height * 0.7,
+                    type: 'lissajous',
+                    a: 3,
+                    b: 4,
+                    scale: 100,
+                    rotation: 0
+                });
+            }
+            
+            drawFibonacciSpiral(spiral) {
+                const phi = 1.618033988749;
+                const ctx = this.ctx;
+                
+                ctx.save();
+                ctx.translate(spiral.centerX, spiral.centerY);
+                ctx.rotate(spiral.rotation + this.time * 0.001);
+                
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(0, 255, 255, ${0.3 + Math.sin(this.time * 0.002) * 0.2})`;
+                ctx.lineWidth = 2;
+                
+                for (let i = 0; i < 200; i++) {
+                    const angle = i * 0.2;
+                    const radius = spiral.scale * Math.pow(phi, angle * 0.1);
+                    const x = radius * Math.cos(angle);
+                    const y = radius * Math.sin(angle);
+                    
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                ctx.stroke();
+                ctx.restore();
+            }
+            
+            drawLissajous(spiral) {
+                const ctx = this.ctx;
+                
+                ctx.save();
+                ctx.translate(spiral.centerX, spiral.centerY);
+                ctx.rotate(spiral.rotation + this.time * 0.0005);
+                
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(255, 0, 255, ${0.4 + Math.sin(this.time * 0.003) * 0.3})`;
+                ctx.lineWidth = 1.5;
+                
+                for (let t = 0; t < Math.PI * 4; t += 0.1) {
+                    const x = spiral.scale * Math.sin(spiral.a * t + this.time * 0.001);
+                    const y = spiral.scale * Math.sin(spiral.b * t);
+                    
+                    if (t === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+                
+                ctx.stroke();
+                ctx.restore();
+            }
+            
+            drawParticles() {
+                const ctx = this.ctx;
+                
+                this.particles.forEach(particle => {
+                    // Update position
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
+                    
+                    // Wrap around screen
+                    if (particle.x < 0) particle.x = this.width;
+                    if (particle.x > this.width) particle.x = 0;
+                    if (particle.y < 0) particle.y = this.height;
+                    if (particle.y > this.height) particle.y = 0;
+                    
+                    // Draw particle
+                    ctx.save();
+                    ctx.globalAlpha = particle.opacity;
+                    ctx.fillStyle = '#00FFFF';
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                });
+            }
+            
+            animate() {
+                this.time += 16; // Assume 60fps
+                
+                // Clear canvas with subtle trail effect
+                this.ctx.fillStyle = 'rgba(15, 15, 35, 0.1)';
+                this.ctx.fillRect(0, 0, this.width, this.height);
+                
+                // Draw mathematical art elements
+                this.spirals.forEach(spiral => {
+                    if (spiral.type === 'fibonacci') {
+                        this.drawFibonacciSpiral(spiral);
+                    } else if (spiral.type === 'lissajous') {
+                        this.drawLissajous(spiral);
+                    }
+                });
+                
+                this.drawParticles();
+                
+                requestAnimationFrame(() => this.animate());
+            }
+            
+            handleResize() {
+                this.width = window.innerWidth;
+                this.height = window.innerHeight;
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+                
+                // Reposition spirals
+                this.spirals[0].centerX = this.width * 0.2;
+                this.spirals[0].centerY = this.height * 0.3;
+                this.spirals[1].centerX = this.width * 0.8;
+                this.spirals[1].centerY = this.height * 0.7;
+            }
+        }
+        
+        // Content Loading System
+        class ContentLoader {
+            constructor() {
+                this.cache = new Map();
+                this.marked = window.marked;
+                this.DOMPurify = window.DOMPurify;
+                
+                if (this.marked) {
+                    this.marked.setOptions({
+                        breaks: true,
+                        gfm: true
+                    });
+                }
+            }
+            
+            async loadContent(filename) {
+                const cacheKey = `content_${filename}`;
+                
+                // Check cache first
+                if (this.cache.has(cacheKey)) {
+                    return this.cache.get(cacheKey);
+                }
+                
+                try {
+                    const response = await fetch(`/content/${filename}.md`);
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${filename}`);
+                    }
+                    
+                    const markdown = await response.text();
+                    const html = this.DOMPurify ? 
+                        this.DOMPurify.sanitize(this.marked(markdown)) : 
+                        this.marked(markdown);
+                    
+                    // Cache the result
+                    this.cache.set(cacheKey, html);
+                    
+                    return html;
+                } catch (error) {
+                    console.error(`Error loading content: ${error.message}`);
+                    return this.getFallbackContent(filename);
+                }
+            }
+            
+            getFallbackContent(filename) {
+                const fallbacks = {
+                    hero: `
+                        <h1>Dan Nazarov</h1>
+                        <p>Chatbot Developer & Automation Expert</p>
+                        <p>Transforming events and businesses through intelligent automation and cutting-edge chatbot solutions</p>
+                        <div class="hero-buttons">
+                            <a href="#portfolio" class="btn">View Portfolio</a>
+                            <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                        </div>
+                    `,
+                    about: `
+                        <h2>About</h2>
+                        <p>Professional chatbot development and automation services.</p>
+                    `,
+                    portfolio: `
+                        <h2>Portfolio</h2>
+                        <p>Festival chatbot system for 5 festivals with 33 kimono tracking.</p>
+                    `,
+                    services: `
+                        <h2>Services</h2>
+                        <p>Custom chatbot development and automation solutions.</p>
+                    `,
+                    contact: `
+                        <h2>Contact</h2>
+                        <p>Ready to start your project? <a href="mailto:dan@dataai.com" class="btn">Email Me</a></p>
+                    `
+                };
+                
+                return fallbacks[filename] || '<p>Content not available.</p>';
+            }
+            
+            async loadAllContent() {
+                const sections = ['hero', 'about', 'portfolio', 'services', 'contact'];
+                
+                for (const section of sections) {
+                    const content = await this.loadContent(section);
+                    const element = document.getElementById(`${section}-content`);
+                    if (element) {
+                        element.innerHTML = content;
+                        element.classList.remove('loading');
+                    }
+                }
+            }
+        }
+        
+        // Initialize everything when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for navigation links
+            // Initialize mathematical art background
+            const canvas = document.getElementById('math-canvas');
+            new MathArt(canvas);
+            
+            // Initialize content loader
+            const contentLoader = new ContentLoader();
+            contentLoader.loadAllContent();
+            
+            // Smooth scrolling for navigation
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -564,24 +822,23 @@
                 });
             });
             
-            // Simple intersection observer for animations
-            if ('IntersectionObserver' in window) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }
-                    });
-                }, { threshold: 0.1 });
-                
-                document.querySelectorAll('.card').forEach(card => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(card);
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
                 });
-            }
+            }, observerOptions);
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                observer.observe(section);
+            });
         });
     </script>
 </body>
