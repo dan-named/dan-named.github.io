@@ -1,15 +1,588 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dan's GitHub Pages Site</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dan Nazarov - Chatbot Developer & Automation Expert | DataAI.com</title>
+    <meta name="description" content="Professional chatbot development and automation services. Specializing in event industry solutions with proven festival chatbot expertise.">
+    <meta name="keywords" content="chatbot developer, automation expert, event chatbots, festival technology, AI development">
+    <meta name="author" content="Dan Nazarov">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dan-ai.com/">
+    <meta property="og:title" content="Dan Nazarov - Chatbot Developer & Automation Expert">
+    <meta property="og:description" content="Professional chatbot development and automation services. Specializing in event industry solutions with proven festival chatbot expertise.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://dan-ai.com/">
+    <meta property="twitter:title" content="Dan Nazarov - Chatbot Developer & Automation Expert">
+    <meta property="twitter:description" content="Professional chatbot development and automation services. Specializing in event industry solutions with proven festival chatbot expertise.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        h1 { color: #333; }
+        /* CSS Variables - Cyberpunk Color System */
+        :root {
+            /* Golden Ratio */
+            --golden-ratio: 1.618;
+            --golden-ratio-inverse: 0.618;
+            
+            /* Primary Colors */
+            --purple-primary: #6B46C1;
+            --purple-secondary: #8B5CF6;
+            --purple-accent: #A855F7;
+            
+            /* Neon Accents */
+            --cyan-neon: #00FFFF;
+            --magenta-neon: #FF00FF;
+            --green-neon: #39FF14;
+            
+            /* Dark Background */
+            --bg-primary: #0F0F23;
+            --bg-secondary: #1E1E3F;
+            --bg-tertiary: #2D2D5F;
+            
+            /* Text Colors */
+            --text-primary: #FFFFFF;
+            --text-secondary: #B8B8FF;
+            --text-muted: #8A8AE5;
+            
+            /* Spacing based on Fibonacci sequence */
+            --space-xs: 0.5rem;    /* 8px */
+            --space-sm: 0.8125rem; /* 13px */
+            --space-md: 1.3125rem; /* 21px */
+            --space-lg: 2.125rem;  /* 34px */
+            --space-xl: 3.4375rem; /* 55px */
+            --space-xxl: 5.5625rem; /* 89px */
+            
+            /* Container widths */
+            --container-sm: 320px;
+            --container-md: 768px;
+            --container-lg: 1200px;
+            --container-max: 1400px;
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: calc(1 * var(--golden-ratio));
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Mathematical Grid System */
+        .container {
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .grid {
+            display: grid;
+            gap: var(--space-lg);
+        }
+        
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        /* Dynamic Background */
+        .cyberpunk-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .geometric-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(107, 70, 193, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+            animation: pulseOverlay 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulseOverlay {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--cyan-neon), var(--magenta-neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+        
+        h2 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--purple-accent);
+            margin-bottom: var(--space-lg);
+        }
+        
+        h3 {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            color: var(--cyan-neon);
+            margin-bottom: var(--space-md);
+        }
+        
+        p {
+            font-size: clamp(1rem, 2.5vw, 1.125rem);
+            line-height: var(--golden-ratio);
+            margin-bottom: var(--space-md);
+            color: var(--text-secondary);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--purple-primary);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) var(--space-md);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cyan-neon);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--cyan-neon);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cyan-neon);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Sections */
+        section {
+            padding: var(--space-xxl) 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding-top: calc(var(--space-xxl) + 60px);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero p {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            margin-bottom: var(--space-xl);
+            color: var(--text-secondary);
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: var(--space-md) var(--space-xl);
+            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(107, 70, 193, 0.3);
+            border-color: var(--cyan-neon);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--cyan-neon);
+            color: var(--cyan-neon);
+        }
+        
+        .btn-outline:hover {
+            background: var(--cyan-neon);
+            color: var(--bg-primary);
+        }
+        
+        /* Cards */
+        .card {
+            background: rgba(30, 30, 63, 0.8);
+            border: 1px solid var(--purple-primary);
+            border-radius: 12px;
+            padding: var(--space-xl);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyan-neon), var(--magenta-neon), var(--green-neon));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyan-neon);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding-top: var(--space-xxl);
+            }
+            
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: var(--space-xl) 0;
+            }
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* Focus styles for keyboard navigation */
+        *:focus {
+            outline: 2px solid var(--cyan-neon);
+            outline-offset: 2px;
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--bg-primary);
+            color: var(--cyan-neon);
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
     </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>Welcome to my first GitHub Pages site!</p>
-    <p>This site is hosted directly from my GitHub repository.</p>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Dynamic Background -->
+    <div class="cyberpunk-bg">
+        <div class="geometric-overlay"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <div class="nav-container">
+                <a href="#" class="logo" aria-label="Dan Nazarov - Home">DataAI</a>
+                <ul class="nav-links">
+                    <li><a href="#expertise">Expertise</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="main-content">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Dan Nazarov</h1>
+                <p>Chatbot Developer & Automation Expert</p>
+                <p>Transforming events and businesses through intelligent automation and cutting-edge chatbot solutions</p>
+                <div style="display: flex; gap: var(--space-md); justify-content: center; flex-wrap: wrap;">
+                    <a href="#portfolio" class="btn">View Portfolio</a>
+                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Expertise Section -->
+    <section id="expertise">
+        <div class="container">
+            <h2>Expertise</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>Chatbot Development</h3>
+                    <p>Custom chatbot solutions for events, customer service, and business automation. Specializing in complex interaction flows and multi-platform integration.</p>
+                </div>
+                <div class="card">
+                    <h3>Event Automation</h3>
+                    <p>Comprehensive automation systems for festivals and events, including participant tracking, gift exchanges, and real-time engagement features.</p>
+                </div>
+                <div class="card">
+                    <h3>Technical Integration</h3>
+                    <p>Seamless integration of chatbots with existing systems, databases, and third-party services for enhanced functionality and user experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <div class="container">
+            <h2>Portfolio</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>Festival Chatbot System</h3>
+                    <p><strong>5 Festivals • 33 Kimono Tracking System</strong></p>
+                    <p>Developed a comprehensive chatbot system for multiple festivals featuring:</p>
+                    <ul style="list-style: none; padding-left: 0; margin: var(--space-md) 0;">
+                        <li>✦ 24-hour gift exchange mechanics</li>
+                        <li>✦ Real-time kimono tracking across 33 unique items</li>
+                        <li>✦ Photo integration and social sharing</li>
+                        <li>✦ Participant engagement and gamification</li>
+                        <li>✦ Multi-festival deployment and management</li>
+                    </ul>
+                    <p>Successfully managed thousands of interactions across multiple simultaneous events, demonstrating scalability and reliability in high-traffic scenarios.</p>
+                </div>
+                <div class="card">
+                    <h3>Automation Solutions</h3>
+                    <p>Custom automation systems for various industries including:</p>
+                    <ul style="list-style: none; padding-left: 0; margin: var(--space-md) 0;">
+                        <li>✦ Customer service automation</li>
+                        <li>✦ Event management systems</li>
+                        <li>✦ Data collection and processing</li>
+                        <li>✦ Integration with existing business tools</li>
+                        <li>✦ Multi-language support capabilities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2>Services Offered</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>Custom Chatbot Development</h3>
+                    <p>End-to-end chatbot development tailored to your specific needs. From concept to deployment, I create intelligent conversational experiences that engage users and drive results.</p>
+                </div>
+                <div class="card">
+                    <h3>Event Industry Automation</h3>
+                    <p>Specialized automation solutions for festivals, conferences, and events. Including participant management, real-time tracking, and interactive engagement systems.</p>
+                </div>
+                <div class="card">
+                    <h3>International Client Support</h3>
+                    <p>Professional services in English for international clients seeking reliable chatbot and automation solutions with proven track record and technical expertise.</p>
+                </div>
+                <div class="card">
+                    <h3>Agency Partnership</h3>
+                    <p>Collaborate with established automation agency for larger projects. Access to comprehensive development resources and multi-language support capabilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>Ready to Start Your Project?</h3>
+                    <p>Let's discuss how chatbot automation can transform your business or event. I specialize in creating custom solutions that deliver real results.</p>
+                    <div style="margin-top: var(--space-lg);">
+                        <a href="mailto:dan@dataai.com" class="btn">Email Me</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>Project Inquiry</h3>
+                    <p>Have a specific project in mind? I'd love to hear about your requirements and provide insights on how we can bring your vision to life.</p>
+                    <ul style="list-style: none; padding-left: 0; margin: var(--space-md) 0;">
+                        <li>✦ Free initial consultation</li>
+                        <li>✦ Custom solution development</li>
+                        <li>✦ Ongoing support and maintenance</li>
+                        <li>✦ International project experience</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        // Simple performance-optimized animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Simple intersection observer for animations
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                document.querySelectorAll('.card').forEach(card => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(card);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
