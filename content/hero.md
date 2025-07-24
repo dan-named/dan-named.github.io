@@ -1,4 +1,4 @@
-# Dan Nazarov
+# Daniel Vasilyeu
 
 **Chatbot Developer & Automation Expert**
 

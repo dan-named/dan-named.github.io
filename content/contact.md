@@ -5,7 +5,7 @@
         <h3>Ready to Start Your Project?</h3>
         <p>Let's discuss how chatbot automation can transform your business or event. I specialize in creating custom solutions that deliver real results.</p>
         <div style="margin-top: var(--space-lg);">
-            <a href="mailto:dan@dataai.com" class="btn">Email Me</a>
+            <a href="mailto:dan@dan-ai.com" class="btn">Email Me</a>
         </div>
     </div>
     <div class="card">
