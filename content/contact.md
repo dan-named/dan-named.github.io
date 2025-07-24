@@ -1,21 +1,24 @@
-# Get In Touch
+# Connect with Dan AI
 
 <div class="grid grid-2">
     <div class="card">
-        <h3>Ready to Start Your Project?</h3>
-        <p>Let's discuss how chatbot automation can transform your business or event. I specialize in creating custom solutions that deliver real results.</p>
+        <h3>Ready to Build with AI?</h3>
+        <p>Let's discuss how AI automation can transform your business or event. Dan AI specializes in creating intelligent solutions that deliver measurable results and scale effortlessly.</p>
         <div style="margin-top: var(--space-lg);">
-            <a href="mailto:dan@dan-ai.com" class="btn">Email Me</a>
+            <a href="https://cal.com/dan-named/quick-start?overlayCalendar=true" class="btn" target="_blank" rel="noopener">Schedule a Call</a>
         </div>
     </div>
     <div class="card">
-        <h3>Project Inquiry</h3>
-        <p>Have a specific project in mind? I'd love to hear about your requirements and provide insights on how we can bring your vision to life.</p>
+        <h3>AI Project Consultation</h3>
+        <p>Have a specific AI project in mind? Dan AI provides expert insights on how to bring your intelligent automation vision to life with cutting-edge technology.</p>
         <ul class="feature-list">
-            <li>Free initial consultation</li>
-            <li>Custom solution development</li>
-            <li>Ongoing support and maintenance</li>
-            <li>International project experience</li>
+            <li>Free AI consultation and strategy session</li>
+            <li>Custom AI solution development</li>
+            <li>Ongoing AI system support and optimization</li>
+            <li>Global enterprise AI project experience</li>
         </ul>
+        <div style="margin-top: var(--space-lg);">
+            <a href="https://www.linkedin.com/in/vasilyeu/" class="btn btn-outline" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        </div>
     </div>
 </div>

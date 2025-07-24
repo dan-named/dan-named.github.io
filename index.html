@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dan AI</title>
-    <meta name="description" content="Professional chatbot development and automation services. Specializing in event industry solutions with proven festival chatbot expertise.">
-    <meta name="keywords" content="chatbot developer, automation expert, event chatbots, festival technology, AI development">
-    <meta name="author" content="Daniel Vasilyeu">
+    <title>Dan AI - AI Developer & Automation Expert</title>
+    <meta name="description" content="Dan AI: Professional AI development and automation services. Specializing in intelligent chatbots, event automation, and cutting-edge AI solutions.">
+    <meta name="keywords" content="AI developer, automation expert, chatbot development, artificial intelligence, machine learning, event automation">
+    <meta name="author" content="Dan AI">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dan-ai.com/">
-    <meta property="og:title" content="Daniel Vasilyeu - Chatbot Developer & Automation Expert">
-    <meta property="og:description" content="Professional chatbot development and automation services. Specializing in event industry solutions with proven festival chatbot expertise.">
+    <meta property="og:title" content="Dan AI - AI Developer & Automation Expert">
+    <meta property="og:description" content="Dan AI: Professional AI development and automation services. Specializing in intelligent chatbots, event automation, and cutting-edge AI solutions.">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://dan-ai.com/">
-    <meta property="twitter:title" content="Daniel Vasilyeu - Chatbot Developer & Automation Expert">
-    <meta property="twitter:description" content="Professional chatbot development and automation services. Specializing in event industry solutions with proven festival chatbot expertise.">
+    <meta property="twitter:title" content="Dan AI - AI Developer & Automation Expert">
+    <meta property="twitter:description" content="Dan AI: Professional AI development and automation services. Specializing in intelligent chatbots, event automation, and cutting-edge AI solutions.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -405,6 +405,29 @@
             margin-bottom: var(--space-xxl);
         }
         
+        .hero-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--cyan-neon);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+            transition: all var(--animation-medium) ease;
+            object-fit: cover;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(0, 255, 255, 0.6);
+        }
+        
         .hero p {
             font-size: clamp(1.125rem, 3vw, 1.5rem);
             margin-bottom: var(--space-xl);
@@ -417,6 +440,41 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-top: var(--space-xl);
+        }
+        
+        /* LinkedIn Icon */
+        .linkedin-icon {
+            position: fixed;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--purple-primary), var(--purple-accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--animation-medium) ease;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+        
+        .linkedin-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 215, 255, 0.3);
+            border-color: var(--cyan-neon);
+        }
+        
+        .linkedin-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-primary);
+            transition: fill var(--animation-fast) ease;
+        }
+        
+        .linkedin-icon:hover svg {
+            fill: var(--cyan-neon);
         }
         
         /* Responsive Design */
@@ -488,6 +546,13 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
+    <!-- LinkedIn Icon -->
+    <a href="https://www.linkedin.com/in/vasilyeu/" class="linkedin-icon" target="_blank" rel="noopener" aria-label="Connect with Dan AI on LinkedIn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+    </a>
+    
     <!-- Mathematical Art Background -->
     <canvas id="math-canvas"></canvas>
     
@@ -496,7 +561,7 @@
         <!-- Navigation -->
         <nav role="navigation" aria-label="Main navigation">
             <div class="nav-container">
-                <a href="#" class="logo" aria-label="Daniel Vasilyeu - Home">Dan AI</a>
+                <a href="#" class="logo" aria-label="Dan AI - Home">Dan AI</a>
                 <ul class="nav-links">
                     <li><a href="#about" data-section="about">About</a></li>
                     <li><a href="#portfolio" data-section="portfolio">Portfolio</a></li>
@@ -536,7 +601,7 @@
     </div>
     
     <script>
-        // Mathematical Art Background System
+        // VS Code-Inspired Mathematical Background System
         class MathArt {
             constructor(canvas) {
                 this.canvas = canvas;
@@ -544,11 +609,12 @@
                 this.width = window.innerWidth;
                 this.height = window.innerHeight;
                 this.time = 0;
+                this.nodes = [];
+                this.connections = [];
                 this.particles = [];
-                this.spirals = [];
                 
                 this.init();
-                this.createSpirals();
+                this.createNetworkGrid();
                 this.animate();
                 
                 window.addEventListener('resize', () => this.handleResize());
@@ -558,92 +624,197 @@
                 this.canvas.width = this.width;
                 this.canvas.height = this.height;
                 
-                // Create particles for ambient effects
-                for (let i = 0; i < 50; i++) {
+                // VS Code-inspired color palette
+                this.colors = {
+                    primary: 'rgba(0, 215, 255, 0.6)',      // Bright cyan
+                    secondary: 'rgba(100, 150, 255, 0.4)',   // Blue accent
+                    tertiary: 'rgba(255, 255, 255, 0.2)',    // White highlights
+                    background: 'rgba(12, 12, 12, 0.95)',    // Dark background
+                    nodes: 'rgba(0, 215, 255, 0.8)'          // Node color
+                };
+                
+                // Create floating particles for ambient effect
+                for (let i = 0; i < 30; i++) {
                     this.particles.push({
                         x: Math.random() * this.width,
                         y: Math.random() * this.height,
-                        size: Math.random() * 2 + 1,
-                        speedX: (Math.random() - 0.5) * 0.5,
-                        speedY: (Math.random() - 0.5) * 0.5,
-                        opacity: Math.random() * 0.5 + 0.2
+                        size: Math.random() * 1.5 + 0.5,
+                        speedX: (Math.random() - 0.5) * 0.3,
+                        speedY: (Math.random() - 0.5) * 0.3,
+                        opacity: Math.random() * 0.4 + 0.1,
+                        pulse: Math.random() * Math.PI * 2
                     });
                 }
             }
             
-            createSpirals() {
-                // Golden ratio spiral
-                this.spirals.push({
-                    centerX: this.width * 0.2,
-                    centerY: this.height * 0.3,
-                    type: 'fibonacci',
-                    scale: 0.8,
-                    rotation: 0
-                });
+            createNetworkGrid() {
+                this.nodes = [];
+                this.connections = [];
                 
-                // Lissajous curves
-                this.spirals.push({
-                    centerX: this.width * 0.8,
-                    centerY: this.height * 0.7,
-                    type: 'lissajous',
-                    a: 3,
-                    b: 4,
-                    scale: 100,
-                    rotation: 0
-                });
-            }
-            
-            drawFibonacciSpiral(spiral) {
-                const phi = 1.618033988749;
-                const ctx = this.ctx;
+                // Create geometric grid nodes
+                const gridSpacing = 120;
+                const rows = Math.ceil(this.height / gridSpacing) + 2;
+                const cols = Math.ceil(this.width / gridSpacing) + 2;
                 
-                ctx.save();
-                ctx.translate(spiral.centerX, spiral.centerY);
-                ctx.rotate(spiral.rotation + this.time * 0.001);
-                
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(0, 255, 255, ${0.3 + Math.sin(this.time * 0.002) * 0.2})`;
-                ctx.lineWidth = 2;
-                
-                for (let i = 0; i < 200; i++) {
-                    const angle = i * 0.2;
-                    const radius = spiral.scale * Math.pow(phi, angle * 0.1);
-                    const x = radius * Math.cos(angle);
-                    const y = radius * Math.sin(angle);
-                    
-                    if (i === 0) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
+                for (let row = 0; row < rows; row++) {
+                    for (let col = 0; col < cols; col++) {
+                        // Add some randomness to avoid perfect grid
+                        const offsetX = (Math.random() - 0.5) * 40;
+                        const offsetY = (Math.random() - 0.5) * 40;
+                        
+                        this.nodes.push({
+                            x: col * gridSpacing + offsetX,
+                            y: row * gridSpacing + offsetY,
+                            originalX: col * gridSpacing + offsetX,
+                            originalY: row * gridSpacing + offsetY,
+                            size: Math.random() * 2 + 1,
+                            pulse: Math.random() * Math.PI * 2,
+                            connections: []
+                        });
                     }
                 }
                 
+                // Create connections between nearby nodes
+                this.nodes.forEach((node, index) => {
+                    this.nodes.forEach((otherNode, otherIndex) => {
+                        if (index !== otherIndex) {
+                            const distance = Math.sqrt(
+                                Math.pow(node.x - otherNode.x, 2) + 
+                                Math.pow(node.y - otherNode.y, 2)
+                            );
+                            
+                            // Connect nodes within a certain distance
+                            if (distance < 150 && Math.random() > 0.7) {
+                                this.connections.push({
+                                    from: node,
+                                    to: otherNode,
+                                    strength: 1 - (distance / 150)
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+            
+            drawNetworkGrid() {
+                const ctx = this.ctx;
+                
+                // Draw connections
+                this.connections.forEach(connection => {
+                    const opacity = connection.strength * 0.3 * (0.5 + Math.sin(this.time * 0.001) * 0.3);
+                    
+                    ctx.save();
+                    ctx.strokeStyle = `rgba(0, 215, 255, ${opacity})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(connection.from.x, connection.from.y);
+                    ctx.lineTo(connection.to.x, connection.to.y);
+                    ctx.stroke();
+                    ctx.restore();
+                });
+                
+                // Draw nodes
+                this.nodes.forEach(node => {
+                    // Subtle floating animation
+                    node.pulse += 0.02;
+                    const floatY = Math.sin(node.pulse) * 2;
+                    const pulseFactor = 0.8 + Math.sin(node.pulse * 2) * 0.2;
+                    
+                    ctx.save();
+                    ctx.globalAlpha = 0.6 + Math.sin(node.pulse) * 0.2;
+                    ctx.fillStyle = this.colors.nodes;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y + floatY, node.size * pulseFactor, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Add subtle glow
+                    ctx.shadowColor = this.colors.primary;
+                    ctx.shadowBlur = 8;
+                    ctx.fill();
+                    ctx.restore();
+                });
+            }
+            
+            drawGeometricShapes() {
+                const ctx = this.ctx;
+                
+                // Draw subtle hexagonal patterns
+                const hexSize = 60;
+                const hexRows = Math.ceil(this.height / (hexSize * 1.5)) + 1;
+                const hexCols = Math.ceil(this.width / (hexSize * Math.sqrt(3))) + 1;
+                
+                for (let row = 0; row < hexRows; row++) {
+                    for (let col = 0; col < hexCols; col++) {
+                        const x = col * hexSize * Math.sqrt(3) + (row % 2) * hexSize * Math.sqrt(3) / 2;
+                        const y = row * hexSize * 1.5;
+                        
+                        // Only draw some hexagons for subtlety
+                        if (Math.random() > 0.95) {
+                            this.drawHexagon(x, y, hexSize * 0.3, 0.1);
+                        }
+                    }
+                }
+                
+                // Draw subtle triangular elements
+                for (let i = 0; i < 8; i++) {
+                    const x = Math.random() * this.width;
+                    const y = Math.random() * this.height;
+                    const size = Math.random() * 30 + 10;
+                    const rotation = this.time * 0.0005 + i;
+                    
+                    this.drawTriangle(x, y, size, rotation, 0.05);
+                }
+            }
+            
+            drawHexagon(x, y, size, opacity) {
+                const ctx = this.ctx;
+                
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.strokeStyle = `rgba(100, 150, 255, ${opacity})`;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i * Math.PI) / 3;
+                    const px = size * Math.cos(angle);
+                    const py = size * Math.sin(angle);
+                    
+                    if (i === 0) {
+                        ctx.moveTo(px, py);
+                    } else {
+                        ctx.lineTo(px, py);
+                    }
+                }
+                
+                ctx.closePath();
                 ctx.stroke();
                 ctx.restore();
             }
             
-            drawLissajous(spiral) {
+            drawTriangle(x, y, size, rotation, opacity) {
                 const ctx = this.ctx;
                 
                 ctx.save();
-                ctx.translate(spiral.centerX, spiral.centerY);
-                ctx.rotate(spiral.rotation + this.time * 0.0005);
-                
+                ctx.translate(x, y);
+                ctx.rotate(rotation);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.lineWidth = 0.8;
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(255, 0, 255, ${0.4 + Math.sin(this.time * 0.003) * 0.3})`;
-                ctx.lineWidth = 1.5;
                 
-                for (let t = 0; t < Math.PI * 4; t += 0.1) {
-                    const x = spiral.scale * Math.sin(spiral.a * t + this.time * 0.001);
-                    const y = spiral.scale * Math.sin(spiral.b * t);
+                for (let i = 0; i < 3; i++) {
+                    const angle = (i * 2 * Math.PI) / 3;
+                    const px = size * Math.cos(angle);
+                    const py = size * Math.sin(angle);
                     
-                    if (t === 0) {
-                        ctx.moveTo(x, y);
+                    if (i === 0) {
+                        ctx.moveTo(px, py);
                     } else {
-                        ctx.lineTo(x, y);
+                        ctx.lineTo(px, py);
                     }
                 }
                 
+                ctx.closePath();
                 ctx.stroke();
                 ctx.restore();
             }
@@ -655,19 +826,28 @@
                     // Update position
                     particle.x += particle.speedX;
                     particle.y += particle.speedY;
+                    particle.pulse += 0.03;
                     
                     // Wrap around screen
-                    if (particle.x < 0) particle.x = this.width;
-                    if (particle.x > this.width) particle.x = 0;
-                    if (particle.y < 0) particle.y = this.height;
-                    if (particle.y > this.height) particle.y = 0;
+                    if (particle.x < -10) particle.x = this.width + 10;
+                    if (particle.x > this.width + 10) particle.x = -10;
+                    if (particle.y < -10) particle.y = this.height + 10;
+                    if (particle.y > this.height + 10) particle.y = -10;
                     
-                    // Draw particle
+                    // Draw particle with pulsing effect
+                    const pulsedOpacity = particle.opacity * (0.7 + Math.sin(particle.pulse) * 0.3);
+                    const pulsedSize = particle.size * (0.8 + Math.sin(particle.pulse * 1.5) * 0.2);
+                    
                     ctx.save();
-                    ctx.globalAlpha = particle.opacity;
-                    ctx.fillStyle = '#00FFFF';
+                    ctx.globalAlpha = pulsedOpacity;
+                    ctx.fillStyle = this.colors.primary;
                     ctx.beginPath();
-                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.arc(particle.x, particle.y, pulsedSize, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Add subtle glow
+                    ctx.shadowColor = this.colors.primary;
+                    ctx.shadowBlur = 6;
                     ctx.fill();
                     ctx.restore();
                 });
@@ -676,19 +856,18 @@
             animate() {
                 this.time += 16; // Assume 60fps
                 
-                // Clear canvas with subtle trail effect
-                this.ctx.fillStyle = 'rgba(15, 15, 35, 0.1)';
+                // Clear canvas with gradient background
+                const gradient = this.ctx.createLinearGradient(0, 0, 0, this.height);
+                gradient.addColorStop(0, 'rgba(12, 12, 12, 1)');
+                gradient.addColorStop(0.5, 'rgba(18, 18, 30, 1)');
+                gradient.addColorStop(1, 'rgba(12, 12, 12, 1)');
+                
+                this.ctx.fillStyle = gradient;
                 this.ctx.fillRect(0, 0, this.width, this.height);
                 
-                // Draw mathematical art elements
-                this.spirals.forEach(spiral => {
-                    if (spiral.type === 'fibonacci') {
-                        this.drawFibonacciSpiral(spiral);
-                    } else if (spiral.type === 'lissajous') {
-                        this.drawLissajous(spiral);
-                    }
-                });
-                
+                // Draw all elements
+                this.drawGeometricShapes();
+                this.drawNetworkGrid();
                 this.drawParticles();
                 
                 requestAnimationFrame(() => this.animate());
@@ -700,11 +879,8 @@
                 this.canvas.width = this.width;
                 this.canvas.height = this.height;
                 
-                // Reposition spirals
-                this.spirals[0].centerX = this.width * 0.2;
-                this.spirals[0].centerY = this.height * 0.3;
-                this.spirals[1].centerX = this.width * 0.8;
-                this.spirals[1].centerY = this.height * 0.7;
+                // Recreate network grid for new dimensions
+                this.createNetworkGrid();
             }
         }
         
