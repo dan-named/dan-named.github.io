@@ -28,6 +28,9 @@
     <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
     
+    <!-- Mathematical Background System -->
+    <script src="/js/matrix-background.js"></script>
+    
     <style>
         /* CSS Variables - Enhanced Design System */
         :root {
@@ -516,7 +519,7 @@
             }
             
             #math-canvas {
-                display: none;
+                opacity: 0.3;
             }
         }
         
@@ -601,288 +604,8 @@
     </div>
     
     <script>
-        // VS Code-Inspired Mathematical Background System
-        class MathArt {
-            constructor(canvas) {
-                this.canvas = canvas;
-                this.ctx = canvas.getContext('2d');
-                this.width = window.innerWidth;
-                this.height = window.innerHeight;
-                this.time = 0;
-                this.nodes = [];
-                this.connections = [];
-                this.particles = [];
-                
-                this.init();
-                this.createNetworkGrid();
-                this.animate();
-                
-                window.addEventListener('resize', () => this.handleResize());
-            }
-            
-            init() {
-                this.canvas.width = this.width;
-                this.canvas.height = this.height;
-                
-                // VS Code-inspired color palette
-                this.colors = {
-                    primary: 'rgba(0, 215, 255, 0.6)',      // Bright cyan
-                    secondary: 'rgba(100, 150, 255, 0.4)',   // Blue accent
-                    tertiary: 'rgba(255, 255, 255, 0.2)',    // White highlights
-                    background: 'rgba(12, 12, 12, 0.95)',    // Dark background
-                    nodes: 'rgba(0, 215, 255, 0.8)'          // Node color
-                };
-                
-                // Create floating particles for ambient effect
-                for (let i = 0; i < 30; i++) {
-                    this.particles.push({
-                        x: Math.random() * this.width,
-                        y: Math.random() * this.height,
-                        size: Math.random() * 1.5 + 0.5,
-                        speedX: (Math.random() - 0.5) * 0.3,
-                        speedY: (Math.random() - 0.5) * 0.3,
-                        opacity: Math.random() * 0.4 + 0.1,
-                        pulse: Math.random() * Math.PI * 2
-                    });
-                }
-            }
-            
-            createNetworkGrid() {
-                this.nodes = [];
-                this.connections = [];
-                
-                // Create geometric grid nodes
-                const gridSpacing = 120;
-                const rows = Math.ceil(this.height / gridSpacing) + 2;
-                const cols = Math.ceil(this.width / gridSpacing) + 2;
-                
-                for (let row = 0; row < rows; row++) {
-                    for (let col = 0; col < cols; col++) {
-                        // Add some randomness to avoid perfect grid
-                        const offsetX = (Math.random() - 0.5) * 40;
-                        const offsetY = (Math.random() - 0.5) * 40;
-                        
-                        this.nodes.push({
-                            x: col * gridSpacing + offsetX,
-                            y: row * gridSpacing + offsetY,
-                            originalX: col * gridSpacing + offsetX,
-                            originalY: row * gridSpacing + offsetY,
-                            size: Math.random() * 2 + 1,
-                            pulse: Math.random() * Math.PI * 2,
-                            connections: []
-                        });
-                    }
-                }
-                
-                // Create connections between nearby nodes
-                this.nodes.forEach((node, index) => {
-                    this.nodes.forEach((otherNode, otherIndex) => {
-                        if (index !== otherIndex) {
-                            const distance = Math.sqrt(
-                                Math.pow(node.x - otherNode.x, 2) + 
-                                Math.pow(node.y - otherNode.y, 2)
-                            );
-                            
-                            // Connect nodes within a certain distance
-                            if (distance < 150 && Math.random() > 0.7) {
-                                this.connections.push({
-                                    from: node,
-                                    to: otherNode,
-                                    strength: 1 - (distance / 150)
-                                });
-                            }
-                        }
-                    });
-                });
-            }
-            
-            drawNetworkGrid() {
-                const ctx = this.ctx;
-                
-                // Draw connections
-                this.connections.forEach(connection => {
-                    const opacity = connection.strength * 0.3 * (0.5 + Math.sin(this.time * 0.001) * 0.3);
-                    
-                    ctx.save();
-                    ctx.strokeStyle = `rgba(0, 215, 255, ${opacity})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath();
-                    ctx.moveTo(connection.from.x, connection.from.y);
-                    ctx.lineTo(connection.to.x, connection.to.y);
-                    ctx.stroke();
-                    ctx.restore();
-                });
-                
-                // Draw nodes
-                this.nodes.forEach(node => {
-                    // Subtle floating animation
-                    node.pulse += 0.02;
-                    const floatY = Math.sin(node.pulse) * 2;
-                    const pulseFactor = 0.8 + Math.sin(node.pulse * 2) * 0.2;
-                    
-                    ctx.save();
-                    ctx.globalAlpha = 0.6 + Math.sin(node.pulse) * 0.2;
-                    ctx.fillStyle = this.colors.nodes;
-                    ctx.beginPath();
-                    ctx.arc(node.x, node.y + floatY, node.size * pulseFactor, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    // Add subtle glow
-                    ctx.shadowColor = this.colors.primary;
-                    ctx.shadowBlur = 8;
-                    ctx.fill();
-                    ctx.restore();
-                });
-            }
-            
-            drawGeometricShapes() {
-                const ctx = this.ctx;
-                
-                // Draw subtle hexagonal patterns
-                const hexSize = 60;
-                const hexRows = Math.ceil(this.height / (hexSize * 1.5)) + 1;
-                const hexCols = Math.ceil(this.width / (hexSize * Math.sqrt(3))) + 1;
-                
-                for (let row = 0; row < hexRows; row++) {
-                    for (let col = 0; col < hexCols; col++) {
-                        const x = col * hexSize * Math.sqrt(3) + (row % 2) * hexSize * Math.sqrt(3) / 2;
-                        const y = row * hexSize * 1.5;
-                        
-                        // Only draw some hexagons for subtlety
-                        if (Math.random() > 0.95) {
-                            this.drawHexagon(x, y, hexSize * 0.3, 0.1);
-                        }
-                    }
-                }
-                
-                // Draw subtle triangular elements
-                for (let i = 0; i < 8; i++) {
-                    const x = Math.random() * this.width;
-                    const y = Math.random() * this.height;
-                    const size = Math.random() * 30 + 10;
-                    const rotation = this.time * 0.0005 + i;
-                    
-                    this.drawTriangle(x, y, size, rotation, 0.05);
-                }
-            }
-            
-            drawHexagon(x, y, size, opacity) {
-                const ctx = this.ctx;
-                
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.strokeStyle = `rgba(100, 150, 255, ${opacity})`;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                
-                for (let i = 0; i < 6; i++) {
-                    const angle = (i * Math.PI) / 3;
-                    const px = size * Math.cos(angle);
-                    const py = size * Math.sin(angle);
-                    
-                    if (i === 0) {
-                        ctx.moveTo(px, py);
-                    } else {
-                        ctx.lineTo(px, py);
-                    }
-                }
-                
-                ctx.closePath();
-                ctx.stroke();
-                ctx.restore();
-            }
-            
-            drawTriangle(x, y, size, rotation, opacity) {
-                const ctx = this.ctx;
-                
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.rotate(rotation);
-                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
-                ctx.lineWidth = 0.8;
-                ctx.beginPath();
-                
-                for (let i = 0; i < 3; i++) {
-                    const angle = (i * 2 * Math.PI) / 3;
-                    const px = size * Math.cos(angle);
-                    const py = size * Math.sin(angle);
-                    
-                    if (i === 0) {
-                        ctx.moveTo(px, py);
-                    } else {
-                        ctx.lineTo(px, py);
-                    }
-                }
-                
-                ctx.closePath();
-                ctx.stroke();
-                ctx.restore();
-            }
-            
-            drawParticles() {
-                const ctx = this.ctx;
-                
-                this.particles.forEach(particle => {
-                    // Update position
-                    particle.x += particle.speedX;
-                    particle.y += particle.speedY;
-                    particle.pulse += 0.03;
-                    
-                    // Wrap around screen
-                    if (particle.x < -10) particle.x = this.width + 10;
-                    if (particle.x > this.width + 10) particle.x = -10;
-                    if (particle.y < -10) particle.y = this.height + 10;
-                    if (particle.y > this.height + 10) particle.y = -10;
-                    
-                    // Draw particle with pulsing effect
-                    const pulsedOpacity = particle.opacity * (0.7 + Math.sin(particle.pulse) * 0.3);
-                    const pulsedSize = particle.size * (0.8 + Math.sin(particle.pulse * 1.5) * 0.2);
-                    
-                    ctx.save();
-                    ctx.globalAlpha = pulsedOpacity;
-                    ctx.fillStyle = this.colors.primary;
-                    ctx.beginPath();
-                    ctx.arc(particle.x, particle.y, pulsedSize, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    // Add subtle glow
-                    ctx.shadowColor = this.colors.primary;
-                    ctx.shadowBlur = 6;
-                    ctx.fill();
-                    ctx.restore();
-                });
-            }
-            
-            animate() {
-                this.time += 16; // Assume 60fps
-                
-                // Clear canvas with gradient background
-                const gradient = this.ctx.createLinearGradient(0, 0, 0, this.height);
-                gradient.addColorStop(0, 'rgba(12, 12, 12, 1)');
-                gradient.addColorStop(0.5, 'rgba(18, 18, 30, 1)');
-                gradient.addColorStop(1, 'rgba(12, 12, 12, 1)');
-                
-                this.ctx.fillStyle = gradient;
-                this.ctx.fillRect(0, 0, this.width, this.height);
-                
-                // Draw all elements
-                this.drawGeometricShapes();
-                this.drawNetworkGrid();
-                this.drawParticles();
-                
-                requestAnimationFrame(() => this.animate());
-            }
-            
-            handleResize() {
-                this.width = window.innerWidth;
-                this.height = window.innerHeight;
-                this.canvas.width = this.width;
-                this.canvas.height = this.height;
-                
-                // Recreate network grid for new dimensions
-                this.createNetworkGrid();
-            }
-        }
+        // Matrix Background System - Using external module
+        // The MatrixBackground class is loaded from /js/matrix-background.js
         
         // Content Loading System
         class ContentLoader {
@@ -976,9 +699,9 @@
         
         // Initialize everything when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize mathematical art background
+            // Initialize matrix rain background
             const canvas = document.getElementById('math-canvas');
-            new MathArt(canvas);
+            new MatrixBackground(canvas);
             
             // Initialize content loader
             const contentLoader = new ContentLoader();
