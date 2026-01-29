@@ -8,9 +8,6 @@ const DesktopContainer = styled.div`
   background-size: cover;
   background-position: center;
   background-color: #008080;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   padding: 16px;
   box-sizing: border-box;
 
@@ -35,9 +32,14 @@ const TopIcons = styled.div`
 const BottomIcons = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
 
   @media (max-width: 768px) {
-    justify-content: center;
+    bottom: 4px;
+    right: 4px;
   }
 `
 

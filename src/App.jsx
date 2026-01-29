@@ -11,13 +11,16 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
+  overflow: hidden;
 `
 
 const DesktopArea = styled.div`
   flex: 1;
   position: relative;
   overflow: hidden;
+  min-height: 0;
 `
 
 // Notepad file contents
