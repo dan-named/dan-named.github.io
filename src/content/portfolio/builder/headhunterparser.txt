@@ -6,4 +6,4 @@ Sales automation system
 • Deduplication of processed listings
 • Auto-creating CRM cards with personalized emails
 
--> New lead channel at scale impossible to handle manually
+→ New lead channel at scale impossible to handle manually

@@ -6,4 +6,4 @@ B2B education at major Russian corporation
 • Teaching n8n automation
 • 4-6 teams per cohort, 6 weeks each
 
--> Teams shipped internal products aligned with corporate goals
+→ Teams shipped internal products aligned with corporate goals

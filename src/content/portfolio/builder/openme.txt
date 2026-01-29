@@ -6,4 +6,4 @@ AI coaching startup with multiple pivots
 • Pivoted to corporate education & HR
 • Building Telegram & WhatsApp chatbots from scratch
 
--> Seeking enterprise clients for deployment
+<a href="https://openme.world" target="_blank">https://openme.world</a>

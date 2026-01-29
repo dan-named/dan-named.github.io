@@ -7,6 +7,6 @@ Topic: Automating sales proposal generation
 • n8n, Granola (call transcription)
 • Zapier, Dropbox (knowledge base)
 • OpenAI, Bitrix24/amoCRM
-• pdf.co for final PDF generation
+• pdf4b for final PDF generation
 
 <a href="https://eduson.academy/" target="_blank">https://eduson.academy/</a>

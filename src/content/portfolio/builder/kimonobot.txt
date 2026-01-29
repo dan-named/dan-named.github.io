@@ -7,4 +7,4 @@ Digital interactive for offline festival (7 days)
 • Notification system for gift events
 • History of each kimono's journey
 
--> Connected people around shared kimono stories
+→ Connected people around shared kimono stories
