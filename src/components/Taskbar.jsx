@@ -8,6 +8,8 @@ const TaskbarContainer = styled(AppBar)`
   bottom: 0;
   left: 0;
   right: 0;
+  flex-shrink: 0;
+  z-index: 1000;
 `
 
 const StyledToolbar = styled(Toolbar)`
