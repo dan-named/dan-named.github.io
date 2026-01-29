@@ -5,5 +5,5 @@ Service for young parents (pregnancy to 1 year)
 • Personalized content based on child development stage
 • 24/7 Q&A powered by GPT models
 
-Bot: <a href="https://t.me/MamaPapaBaby_bot" target="_blank">https://t.me/MamaPapaBaby_bot</a>
-Site: <a href="https://Mamapapa.baby" target="_blank">https://Mamapapa.baby</a>
+Bot: <a href="https://t.me/MamaPapaBaby_bot?start=1" target="_blank">https://t.me/MamaPapaBaby_bot</a>
+Site: <a href="https://MamaPapa.Baby" target="_blank">https://MamaPapa.Baby</a>
