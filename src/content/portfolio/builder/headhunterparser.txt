@@ -1,3 +1,9 @@
 <b>automation contractor</b>
 
-Система, которая парсит вакансии с HeadHunter по определенным фильтрам, отсекает дубли и вакансии которые уже были обработаны, из новых создает карточки в CRM с персонализированным email для отправки. Sales-автоматизация, которая позволила получить новый канал лидов и обрабатывать объем, который без автоматизации обрабатывать невозможно.
+Sales automation system
+
+• Parsing HeadHunter vacancies by filters
+• Deduplication of processed listings
+• Auto-creating CRM cards with personalized emails
+
+-> New lead channel at scale impossible to handle manually

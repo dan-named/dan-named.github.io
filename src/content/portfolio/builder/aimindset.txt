@@ -1,5 +1,10 @@
 <b>tech partner / architect</b>
 
-Разрабатываю и поддерживаю систему Telegram-ботов для продажи участия в лабораториях и курсах. Настраиваю sales-автоматизации, community management автоматизации внутри каждой лаборатории и для сообщества AI Mindset Space. Настраиваю аналитику в PostHog. Работаю с архитектурой базы данных NocoDB, которая связана и с ботами, и с custom LMS.
+Full-stack automation for AI education business
+
+• Telegram bots for course sales
+• Sales & community management automation
+• PostHog analytics setup
+• NocoDB architecture for bots + custom LMS
 
 <a href="https://aimindset.org" target="_blank">https://aimindset.org</a>

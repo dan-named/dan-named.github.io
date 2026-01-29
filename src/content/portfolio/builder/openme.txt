@@ -1,3 +1,9 @@
 <b>tech partner / architect</b>
 
-OpenMe.world — стартап, который прошел множество пивотов от AI-коуча для подростков к MVP в корпоративной среде в сферах образования и HR. Разрабатываю с нуля чат-боты: Telegram, WhatsApp. Ищем больших клиентов для корпоративного развертывания.
+AI coaching startup with multiple pivots
+
+• Started as AI-coach for teenagers
+• Pivoted to corporate education & HR
+• Building Telegram & WhatsApp chatbots from scratch
+
+-> Seeking enterprise clients for deployment

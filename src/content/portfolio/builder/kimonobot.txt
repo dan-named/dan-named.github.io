@@ -1,3 +1,10 @@
 <b>product builder</b>
 
-Офлайн-фестиваль на неделю, к которому организаторы подготовили 33 кимоно с пришитым QR-кодом. QR-коды вели на бота, который позволил организовать digital interactive для офлайн мероприятия: люди дарили кимоно друг другу по определенным правилам, была система уведомлений, необходимость загрузить фотографию с кимоно для получения истории дарений с фотками, отследить по каждому кимоно его путь за 7 дней и объединить людей вокруг одного кимоно.
+Digital interactive for offline festival (7 days)
+
+• 33 kimonos with QR codes linked to Telegram bot
+• Gift tracking system with photo uploads
+• Notification system for gift events
+• History of each kimono's journey
+
+-> Connected people around shared kimono stories

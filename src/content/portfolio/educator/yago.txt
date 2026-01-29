@@ -1,3 +1,9 @@
 <b>teacher</b>
 
-B2B образование в большой российской корпорации. Был в преподавательском составе выездных буткемпов для нетехнических команд, которым преподавал тему автоматизации n8n и доводил за 6 недель идеи команд (от 4 до 6 команд) до реализации, когда люди понимали что они уже умеют и куда дальше они хотят развивать свой продукт, который преследует корпоративные цели.
+B2B education at major Russian corporation
+
+• Bootcamps for non-technical teams
+• Teaching n8n automation
+• 4-6 teams per cohort, 6 weeks each
+
+-> Teams shipped internal products aligned with corporate goals
