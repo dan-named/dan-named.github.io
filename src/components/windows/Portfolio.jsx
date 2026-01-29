@@ -349,10 +349,11 @@ function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, pos
     }
   }
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (e, item) => {
     if (item.type === 'folder' && item.path) {
       navigateTo(item.path)
     } else if (item.type === 'file' && onOpenFile) {
+      e.stopPropagation() // Prevent Portfolio from stealing focus after opening file
       onOpenFile(item.id)
     }
   }
@@ -392,7 +393,7 @@ function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, pos
         <FileGrid>
           {folderItems.length > 0 ? (
             folderItems.map(item => (
-              <FileIcon key={item.id} onClick={() => handleItemClick(item)}>
+              <FileIcon key={item.id} onClick={(e) => handleItemClick(e, item)}>
                 {item.type === 'folder' ? <FolderIconSmall /> : <DocumentIconSmall />}
                 <FileLabel className="file-label">{item.name}</FileLabel>
               </FileIcon>
