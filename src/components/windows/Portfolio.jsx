@@ -6,18 +6,31 @@ const StyledWindow = styled(Window)`
   position: absolute;
   width: 450px;
   max-width: calc(100vw - 20px);
+
+  @media (max-width: 768px) {
+    width: calc(100vw - 16px);
+    left: 8px !important;
+  }
 `
 
 const Header = styled(WindowHeader)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
 `
 
 const CloseButton = styled(Button)`
   margin-left: auto;
   min-width: 20px;
   padding: 0 6px;
+
+  @media (max-width: 768px) {
+    min-width: 32px;
+    min-height: 32px;
+    font-size: 16px;
+  }
 `
 
 const MenuBar = styled.div`
@@ -35,6 +48,11 @@ const MenuItem = styled.span`
   &:hover {
     background: #000080;
     color: white;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 10px;
+    font-size: 14px;
   }
 `
 
@@ -60,6 +78,12 @@ const NavButton = styled(Button)`
   &:disabled {
     opacity: 0.5;
   }
+
+  @media (max-width: 768px) {
+    min-width: 44px;
+    height: 32px;
+    font-size: 12px;
+  }
 `
 
 const ToolbarSeparator = styled.div`
@@ -68,6 +92,10 @@ const ToolbarSeparator = styled.div`
   border-left: 1px solid #808080;
   border-right: 1px solid #FFFFFF;
   margin: 0 4px;
+
+  @media (max-width: 768px) {
+    height: 28px;
+  }
 `
 
 const BackIcon = () => (
@@ -79,10 +107,8 @@ const BackIcon = () => (
 
 const UpIcon = () => (
   <svg width="16" height="14" viewBox="0 0 16 14" style={{ imageRendering: 'pixelated' }}>
-    {/* Folder */}
     <polygon points="1,6 5,6 6,4 1,4" fill="#FFFF00" stroke="#000000" strokeWidth="0.5"/>
     <rect x="1" y="6" width="12" height="7" fill="#FFFF00" stroke="#000000" strokeWidth="0.5"/>
-    {/* Up arrow */}
     <polygon points="8,1 12,5 10,5 10,8 6,8 6,5 4,5" fill="#000080"/>
   </svg>
 )
@@ -94,10 +120,19 @@ const AddressBar = styled.div`
   gap: 8px;
   border-bottom: 1px solid #808080;
   font-size: 12px;
+
+  @media (max-width: 768px) {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
 `
 
 const AddressLabel = styled.span`
   font-weight: bold;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 const AddressPath = styled.div`
@@ -105,18 +140,30 @@ const AddressPath = styled.div`
   background: white;
   padding: 2px 4px;
   border: 2px inset #c0c0c0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const Content = styled(WindowContent)`
   padding: 8px;
   background: white;
   min-height: 200px;
+
+  @media (max-width: 768px) {
+    min-height: 150px;
+  }
 `
 
 const FileGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+    justify-content: flex-start;
+  }
 `
 
 const FileIcon = styled.div`
@@ -128,15 +175,14 @@ const FileIcon = styled.div`
   cursor: pointer;
   width: 70px;
   user-select: none;
+  -webkit-user-select: none;
 
-  &:hover {
-    .file-label {
-      background: #000080;
-      color: white;
-    }
+  @media (max-width: 768px) {
+    width: 65px;
+    padding: 8px 4px;
   }
 
-  &:active {
+  &:hover, &:active {
     .file-label {
       background: #000080;
       color: white;
@@ -158,6 +204,11 @@ const FileLabel = styled.span`
   padding: 1px 2px;
   word-wrap: break-word;
   max-width: 68px;
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+    max-width: 62px;
+  }
 `
 
 // Windows 95 style document icon (small)
@@ -220,7 +271,6 @@ function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, pos
   const canGoBack = historyIndex > 0
   const canGoUp = currentPath.split('\\').length > 2
 
-  // Get folder name from path
   const getFolderName = (path) => {
     const parts = path.split('\\')
     return parts[parts.length - 1]
@@ -230,29 +280,49 @@ function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, pos
     if (position) setPos(position)
   }, [position])
 
-  const handleMouseDown = (e) => {
-    if (e.target.closest('button')) return
+  const handleDragStart = (clientX, clientY) => {
     setIsDragging(true)
-    dragOffset.current = { x: e.clientX - pos.x, y: e.clientY - pos.y }
+    dragOffset.current = { x: clientX - pos.x, y: clientY - pos.y }
     onFocus()
   }
 
+  const handleMouseDown = (e) => {
+    if (e.target.closest('button')) return
+    handleDragStart(e.clientX, e.clientY)
+  }
+
+  const handleTouchStart = (e) => {
+    if (e.target.closest('button')) return
+    const touch = e.touches[0]
+    handleDragStart(touch.clientX, touch.clientY)
+  }
+
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMove = (clientX, clientY) => {
       if (!isDragging) return
-      const newPos = { x: e.clientX - dragOffset.current.x, y: e.clientY - dragOffset.current.y }
+      const newPos = { x: clientX - dragOffset.current.x, y: clientY - dragOffset.current.y }
       setPos(newPos)
       onPositionChange?.(newPos)
     }
-    const handleMouseUp = () => setIsDragging(false)
+
+    const handleMouseMove = (e) => handleMove(e.clientX, e.clientY)
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0]
+      handleMove(touch.clientX, touch.clientY)
+    }
+    const handleEnd = () => setIsDragging(false)
 
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove)
-      window.addEventListener('mouseup', handleMouseUp)
+      window.addEventListener('mouseup', handleEnd)
+      window.addEventListener('touchmove', handleTouchMove, { passive: true })
+      window.addEventListener('touchend', handleEnd)
     }
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('mouseup', handleMouseUp)
+      window.removeEventListener('mouseup', handleEnd)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleEnd)
     }
   }, [isDragging, onPositionChange])
 
@@ -279,7 +349,7 @@ function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, pos
     }
   }
 
-  const handleDoubleClick = (item) => {
+  const handleItemClick = (item) => {
     if (item.type === 'folder' && item.path) {
       navigateTo(item.path)
     } else if (item.type === 'file' && onOpenFile) {
@@ -292,7 +362,10 @@ function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, pos
       style={{ left: pos.x, top: pos.y, zIndex }}
       onClick={onFocus}
     >
-      <Header onMouseDown={handleMouseDown}>
+      <Header
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+      >
         <span>📁 {getFolderName(currentPath)}</span>
         <CloseButton onClick={onClose}>✕</CloseButton>
       </Header>
@@ -319,7 +392,7 @@ function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, pos
         <FileGrid>
           {folderItems.length > 0 ? (
             folderItems.map(item => (
-              <FileIcon key={item.id} onDoubleClick={() => handleDoubleClick(item)}>
+              <FileIcon key={item.id} onClick={() => handleItemClick(item)}>
                 {item.type === 'folder' ? <FolderIconSmall /> : <DocumentIconSmall />}
                 <FileLabel className="file-label">{item.name}</FileLabel>
               </FileIcon>

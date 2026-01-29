@@ -13,6 +13,10 @@ const DesktopContainer = styled.div`
   justify-content: space-between;
   padding: 16px;
   box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
 `
 
 const TopIcons = styled.div`
@@ -20,11 +24,21 @@ const TopIcons = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
 `
 
 const BottomIcons = styled.div`
   display: flex;
   justify-content: flex-end;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `
 
 const Icon = styled.div`
@@ -36,15 +50,14 @@ const Icon = styled.div`
   cursor: pointer;
   width: 80px;
   user-select: none;
+  -webkit-user-select: none;
 
-  &:hover {
-    .icon-label {
-      background: #000080;
-      color: white;
-    }
+  @media (max-width: 768px) {
+    width: 70px;
+    padding: 8px 4px;
   }
 
-  &:active {
+  &:hover, &:active {
     .icon-label {
       background: #000080;
       color: white;
@@ -59,6 +72,16 @@ const IconImage = styled.div`
   align-items: center;
   justify-content: center;
   image-rendering: pixelated;
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
 `
 
 const IconLabel = styled.span`
@@ -70,19 +93,21 @@ const IconLabel = styled.span`
   word-wrap: break-word;
   max-width: 76px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+    max-width: 66px;
+  }
 `
 
 // Windows 95 style document icon (Notepad/text file)
 const DocumentIcon = () => (
   <IconImage>
     <svg width="48" height="48" viewBox="0 0 48 48" style={{ imageRendering: 'pixelated' }}>
-      {/* Paper background */}
       <rect x="8" y="4" width="28" height="40" fill="#FFFFFF" stroke="#000000" strokeWidth="2"/>
-      {/* Folded corner */}
       <polygon points="28,4 36,12 28,12" fill="#C0C0C0" stroke="#000000" strokeWidth="1"/>
       <line x1="28" y1="4" x2="28" y2="12" stroke="#000000" strokeWidth="2"/>
       <line x1="28" y1="12" x2="36" y2="12" stroke="#000000" strokeWidth="2"/>
-      {/* Text lines */}
       <rect x="12" y="18" width="20" height="2" fill="#000080"/>
       <rect x="12" y="24" width="18" height="2" fill="#000080"/>
       <rect x="12" y="30" width="20" height="2" fill="#000080"/>
@@ -95,13 +120,9 @@ const DocumentIcon = () => (
 const FolderIcon = () => (
   <IconImage>
     <svg width="48" height="48" viewBox="0 0 48 48" style={{ imageRendering: 'pixelated' }}>
-      {/* Folder tab */}
       <polygon points="4,12 16,12 20,8 4,8" fill="#FFFF00" stroke="#000000" strokeWidth="2"/>
-      {/* Folder body */}
       <rect x="4" y="12" width="40" height="28" fill="#FFFF00" stroke="#000000" strokeWidth="2"/>
-      {/* Folder highlight */}
       <rect x="6" y="14" width="36" height="2" fill="#FFFFAA"/>
-      {/* Folder shadow */}
       <rect x="6" y="36" width="36" height="2" fill="#808000"/>
     </svg>
   </IconImage>
@@ -111,14 +132,10 @@ const FolderIcon = () => (
 const PhoneIcon = () => (
   <IconImage>
     <svg width="48" height="48" viewBox="0 0 48 48" style={{ imageRendering: 'pixelated' }}>
-      {/* Phone body */}
       <rect x="8" y="8" width="32" height="32" rx="4" fill="#008080" stroke="#000000" strokeWidth="2"/>
-      {/* Receiver */}
       <path d="M12 16 Q12 12 16 12 L20 12 L20 16 L16 20 L16 28 L20 32 L20 36 L16 36 Q12 36 12 32 Z" fill="#000000"/>
       <path d="M36 16 Q36 12 32 12 L28 12 L28 16 L32 20 L32 28 L28 32 L28 36 L32 36 Q36 36 36 32 Z" fill="#000000"/>
-      {/* Cord */}
       <rect x="20" y="22" width="8" height="4" fill="#000000"/>
-      {/* Buttons */}
       <rect x="18" y="14" width="12" height="8" fill="#C0C0C0" stroke="#000000" strokeWidth="1"/>
       <rect x="20" y="16" width="2" height="2" fill="#000000"/>
       <rect x="24" y="16" width="2" height="2" fill="#000000"/>
@@ -132,13 +149,9 @@ const PhoneIcon = () => (
 const TerminalIcon = () => (
   <IconImage>
     <svg width="48" height="48" viewBox="0 0 48 48" style={{ imageRendering: 'pixelated' }}>
-      {/* Window frame */}
       <rect x="4" y="4" width="40" height="40" fill="#000000" stroke="#C0C0C0" strokeWidth="2"/>
-      {/* Title bar */}
       <rect x="6" y="6" width="36" height="6" fill="#000080"/>
-      {/* Screen */}
       <rect x="6" y="12" width="36" height="30" fill="#000000"/>
-      {/* Prompt text */}
       <text x="8" y="24" fill="#C0C0C0" fontSize="8" fontFamily="monospace">C:\&gt;</text>
       <rect x="28" y="20" width="6" height="8" fill="#C0C0C0"/>
     </svg>
