@@ -1,2 +1,5 @@
-Co-author of AI Mindset AUTO 1 Lab, 
+Co-author of AI Mindset AUTO Lab, 
 
+https://aimindset.org/automation-lab
+
+Regularry Do live demo about n8n as a part of other AI Mindset products

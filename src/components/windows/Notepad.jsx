@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+// Content supports HTML: use <a href="...">links</a>, <b>bold</b>, <i>italic</i>, etc.
 import styled from 'styled-components'
 import { Window, WindowHeader, WindowContent, Button } from 'react95'
 
@@ -58,26 +59,62 @@ const MenuItem = styled.span`
   }
 `
 
-const TextArea = styled.textarea`
+const TextContent = styled.div`
   width: 100%;
   height: 250px;
-  border: none;
-  resize: none;
+  overflow-y: auto;
   font-family: 'Fixedsys', 'Courier New', monospace;
   font-size: 14px;
-  line-height: 1.4;
-  padding: 4px;
-  outline: none;
+  line-height: 1.5;
+  padding: 8px;
   background: white;
-
-  &:focus {
-    outline: none;
-  }
+  white-space: pre-wrap;
+  word-wrap: break-word;
 
   @media (max-width: 768px) {
     height: 200px;
-    font-size: 16px;
+    font-size: 14px;
     padding: 8px;
+  }
+
+  a {
+    color: #0000FF;
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      color: #FF0000;
+    }
+
+    &:visited {
+      color: #800080;
+    }
+  }
+
+  h1, h2, h3 {
+    margin: 8px 0;
+    font-weight: bold;
+  }
+
+  h1 { font-size: 18px; }
+  h2 { font-size: 16px; }
+  h3 { font-size: 14px; }
+
+  p {
+    margin: 4px 0;
+  }
+
+  ul, ol {
+    margin: 4px 0;
+    padding-left: 20px;
+  }
+
+  strong, b {
+    font-weight: bold;
+  }
+
+  em, i {
+    font-style: italic;
   }
 `
 
@@ -90,7 +127,6 @@ const Content = styled(WindowContent)`
 function Notepad({ title, filename, content, onClose, onFocus, isFocused, zIndex, position, onPositionChange }) {
   const [pos, setPos] = useState(position || { x: 80, y: 50 })
   const [isDragging, setIsDragging] = useState(false)
-  const [text, setText] = useState(content || '')
   const dragOffset = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
@@ -104,12 +140,12 @@ function Notepad({ title, filename, content, onClose, onFocus, isFocused, zIndex
   }
 
   const handleMouseDown = (e) => {
-    if (e.target.closest('button') || e.target.closest('textarea')) return
+    if (e.target.closest('button') || e.target.closest('a')) return
     handleDragStart(e.clientX, e.clientY)
   }
 
   const handleTouchStart = (e) => {
-    if (e.target.closest('button') || e.target.closest('textarea')) return
+    if (e.target.closest('button') || e.target.closest('a')) return
     const touch = e.touches[0]
     handleDragStart(touch.clientX, touch.clientY)
   }
@@ -162,11 +198,7 @@ function Notepad({ title, filename, content, onClose, onFocus, isFocused, zIndex
         <MenuItem>Help</MenuItem>
       </MenuBar>
       <Content>
-        <TextArea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          spellCheck={false}
-        />
+        <TextContent dangerouslySetInnerHTML={{ __html: content }} />
       </Content>
     </StyledWindow>
   )
