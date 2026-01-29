@@ -250,9 +250,10 @@ const FOLDER_STRUCTURE = {
     { id: 'openMe', name: 'OpenMe.txt', type: 'file' },
     { id: 'kimonoBot', name: 'Kimono Bot.txt', type: 'file' },
     { id: 'headhunterParser', name: 'HeadHunter Parser.txt', type: 'file' },
+    { id: 'aiMindsetBuilder', name: 'AI Mindset.txt', type: 'file' },
   ],
   'C:\\Portfolio\\educator': [
-    { id: 'aiMindset', name: 'AI Mindset.txt', type: 'file' },
+    { id: 'aiMindsetEducator', name: 'AI Mindset.txt', type: 'file' },
     { id: 'eduson', name: 'Eduson.txt', type: 'file' },
     { id: 'yago', name: 'YAGO.txt', type: 'file' },
   ],

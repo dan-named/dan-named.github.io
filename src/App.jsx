@@ -8,14 +8,18 @@ import CallWindow from './components/windows/CallWindow'
 import Terminal from './components/windows/Terminal'
 
 // Import text content from editable files
-import danContent from './content/dan.txt?raw'
-import mamaPapaBabyContent from './content/mamapapababy.txt?raw'
-import openMeContent from './content/openme.txt?raw'
-import kimonoBotContent from './content/kimonobot.txt?raw'
-import headhunterParserContent from './content/headhunterparser.txt?raw'
-import aiMindsetContent from './content/aimindset.txt?raw'
-import edusonContent from './content/eduson.txt?raw'
-import yagoContent from './content/yago.txt?raw'
+// Folder structure mirrors where files appear in the system
+import danContent from './content/desktop/dan.txt?raw'
+// Builder folder
+import mamaPapaBabyContent from './content/portfolio/builder/mamapapababy.txt?raw'
+import openMeContent from './content/portfolio/builder/openme.txt?raw'
+import kimonoBotContent from './content/portfolio/builder/kimonobot.txt?raw'
+import headhunterParserContent from './content/portfolio/builder/headhunterparser.txt?raw'
+import aiMindsetBuilderContent from './content/portfolio/builder/aimindset.txt?raw'
+// Educator folder
+import aiMindsetEducatorContent from './content/portfolio/educator/aimindset.txt?raw'
+import edusonContent from './content/portfolio/educator/eduson.txt?raw'
+import yagoContent from './content/portfolio/educator/yago.txt?raw'
 
 const AppContainer = styled.div`
   display: flex;
@@ -36,11 +40,14 @@ const DesktopArea = styled.div`
 // Notepad file contents - edit files in src/content/ folder
 const FILE_CONTENTS = {
   aboutMe: danContent,
+  // Builder folder
   mamaPapaBaby: mamaPapaBabyContent,
   openMe: openMeContent,
-  aiMindset: aiMindsetContent,
   kimonoBot: kimonoBotContent,
   headhunterParser: headhunterParserContent,
+  aiMindsetBuilder: aiMindsetBuilderContent,
+  // Educator folder
+  aiMindsetEducator: aiMindsetEducatorContent,
   eduson: edusonContent,
   yago: yagoContent,
 }
@@ -86,11 +93,17 @@ const WINDOWS = {
     component: Notepad,
     props: { filename: 'OpenMe.txt', content: FILE_CONTENTS.openMe }
   },
-  aiMindset: {
-    id: 'aiMindset',
+  aiMindsetBuilder: {
+    id: 'aiMindsetBuilder',
     title: 'AI Mindset.txt - Notepad',
     component: Notepad,
-    props: { filename: 'AI Mindset.txt', content: FILE_CONTENTS.aiMindset }
+    props: { filename: 'AI Mindset.txt', content: FILE_CONTENTS.aiMindsetBuilder }
+  },
+  aiMindsetEducator: {
+    id: 'aiMindsetEducator',
+    title: 'AI Mindset.txt - Notepad',
+    component: Notepad,
+    props: { filename: 'AI Mindset.txt', content: FILE_CONTENTS.aiMindsetEducator }
   },
   kimonoBot: {
     id: 'kimonoBot',
