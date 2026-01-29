@@ -7,6 +7,16 @@ import Portfolio from './components/windows/Portfolio'
 import CallWindow from './components/windows/CallWindow'
 import Terminal from './components/windows/Terminal'
 
+// Import text content from editable files
+import danContent from './content/dan.txt?raw'
+import mamaPapaBabyContent from './content/mamapapababy.txt?raw'
+import openMeContent from './content/openme.txt?raw'
+import kimonoBotContent from './content/kimonobot.txt?raw'
+import headhunterParserContent from './content/headhunterparser.txt?raw'
+import aiMindsetContent from './content/aimindset.txt?raw'
+import edusonContent from './content/eduson.txt?raw'
+import yagoContent from './content/yago.txt?raw'
+
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,41 +33,16 @@ const DesktopArea = styled.div`
   min-height: 0;
 `
 
-// Notepad file contents
+// Notepad file contents - edit files in src/content/ folder
 const FILE_CONTENTS = {
-  aboutMe: `===========================================
-  DAN.txt - About Dan AI
-===========================================
-
-AI Developer & Automation Expert
-
-Transforming events and businesses through
-intelligent automation.
-
-What I Do:
-- AI Chatbots & Virtual Assistants
-- Business Process Automation
-- Event Management Systems
-- Custom Integration Solutions
-
-Connect:
-https://www.linkedin.com/in/vasilyeu/
-
-===========================================`,
-
-  mamaPapaBaby: `test test`,
-
-  openMe: `test test`,
-
-  aiMindset: `test test`,
-
-  kimonoBot: `test test`,
-
-  headhunterParser: `test test`,
-
-  eduson: `test test`,
-
-  yago: `test test`,
+  aboutMe: danContent,
+  mamaPapaBaby: mamaPapaBabyContent,
+  openMe: openMeContent,
+  aiMindset: aiMindsetContent,
+  kimonoBot: kimonoBotContent,
+  headhunterParser: headhunterParserContent,
+  eduson: edusonContent,
+  yago: yagoContent,
 }
 
 const WINDOWS = {
