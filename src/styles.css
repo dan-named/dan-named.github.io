@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: url('https://static.wikitide.net/windowswallpaperwiki/2/24/Clouds_%28Windows_95%29.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}

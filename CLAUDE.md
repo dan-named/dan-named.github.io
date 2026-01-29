@@ -1,120 +1,63 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 ## Plan & Review
 
 ### Before starting work
--  Always in plan mode to make a plan.
--  After getting the plan, make sure you write the plan to `.claude/tasks/TASK_NAME.md`.
--  The plan should be a detailed implementation plan and the reasoning behind them, as well as tasks broken down.
--  If the task requires external knowledge or certain packages, also research to get the latest knowledge (Use Task tool for research).
--  Don't over plan it; always think MVP.
--  Once you write the plan, firstly ask me to review it. Do not continue until I approve the plan.
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+- Always enter plan mode first.
+- Write the plan to `.claude/tasks/TASK_NAME.md`.
+- The plan should include detailed implementation steps, reasoning, and task breakdown.
+- Research external packages/knowledge when needed (use Task tool).
+- Think MVP - don't over-plan.
+- Ask for review before proceeding. Do not continue until plan is approved.
 
 ## Project Overview
 
-Professional portfolio website for Dan Nazarov (DataAI.com) showcasing chatbot development and automation expertise. This is a responsive, cyberpunk-themed static site hosted at `dan-ai.com` via GitHub Pages.
+Personal portfolio website for Dan AI (dan-ai.com) with Windows 95 retro aesthetic, hosted on GitHub Pages.
 
-## Repository Structure
+## Tech Stack
 
-- `index.html` - Complete single-page application with embedded CSS and JavaScript
-- `CNAME` - Custom domain configuration for GitHub Pages (`dan-ai.com`)
-- `CLAUDE.md` - This guidance file
+- **React 18** + **Vite** - Build tooling
+- **React95** - Windows 95 UI component library
+- **styled-components** - CSS-in-JS styling
+- **GitHub Pages** - Hosting (custom domain: dan-ai.com)
 
 ## Development Commands
 
-This is a static site with no build system or dependencies. Changes deploy automatically when pushed to the main branch through GitHub Pages.
+```bash
+npm install          # Install dependencies
+npm run dev          # Start dev server (localhost:5173)
+npm run build        # Build for production (outputs to dist/)
+npm run preview      # Preview production build locally
+```
 
-**Common Operations:**
-- **Local Development**: Open `index.html` directly in browser or use `python3 -m http.server 8000` for local server
-- **Deployment**: Push to main branch - GitHub Pages automatically deploys from root directory
-- **Testing**: Test responsiveness at mobile (320px), tablet (768px), and desktop (1200px+) breakpoints
-- **Domain**: Custom domain `dan-ai.com` configured via CNAME file
+## Deployment
 
-## Architecture & Design System
+GitHub Pages deploys from the `dist/` folder or via GitHub Actions. CNAME file configures `dan-ai.com`.
 
-### Mathematical Design Principles
-- **Golden Ratio**: 1.618 used throughout for proportions and spacing
-- **Fibonacci Sequence**: Applied to spacing system (8px, 13px, 21px, 34px, 55px, 89px)
-- **CSS Grid**: Mathematical precision for responsive layouts
-- **Responsive Breakpoints**: Mobile (320px-767px), Tablet (768px-1199px), Desktop (1200px+)
+## Architecture
 
-### Cyberpunk Aesthetic
-- **Color System**: Purple gradients (#6B46C1, #8B5CF6, #A855F7) with neon accents (#00FFFF, #FF00FF, #39FF14)
-- **Typography**: Orbitron (headings) and Rajdhani (body) from Google Fonts
-- **Animations**: Subtle CSS animations with performance optimization
-- **Dark Theme**: Deep space backgrounds (#0F0F23, #1E1E3F)
+```
+src/
+├── components/
+│   ├── Desktop.jsx       # Main desktop with draggable icons
+│   ├── Taskbar.jsx       # Windows 95 taskbar with Start menu
+│   └── windows/
+│       ├── AboutMe.jsx   # Bio/introduction window
+│       ├── Portfolio.jsx # Project showcase window
+│       └── CallWindow.jsx # Cal.com booking embed
+├── App.jsx               # Root component, window state management
+└── main.jsx              # Entry point with React95 theme provider
+```
 
-### Performance Optimizations
-- **Inline CSS/JS**: Everything embedded for minimal HTTP requests
-- **Preconnect**: Google Fonts optimization
-- **Reduced Motion**: Accessibility support for animation preferences
-- **Intersection Observer**: Lazy animation triggers
-- **Mobile-First**: Optimized for low-power devices
+## Key Integrations
 
-### Content Structure
-1. **Hero Section**: Professional introduction with animated gradient text
-2. **Expertise**: Three-column grid of core competencies
-3. **Portfolio**: Festival chatbot case study (5 festivals, 33 kimono tracking)
-4. **Services**: Four service offerings in responsive grid
-5. **Contact**: Professional contact information and inquiry prompt
+- **Cal.com**: Booking widget embedded via iframe (`cal.com/dan-named/quick-start`)
 
-### Accessibility Features
-- **Semantic HTML5**: Proper heading hierarchy and ARIA labels
-- **Skip Links**: Keyboard navigation support
-- **Focus Indicators**: High-contrast focus styles
-- **Screen Readers**: Comprehensive alt text and descriptions
-- **Color Contrast**: WCAG AA compliance
+## React95 Notes
 
-### SEO Implementation
-- **Meta Tags**: Title, description, keywords, author
-- **Open Graph**: Facebook sharing optimization
-- **Twitter Cards**: Social media preview support
-- **Structured Data**: Professional portfolio markup
-
-## Making Changes
-
-**File Structure:**
-- **Single File Architecture**: Everything is contained in `index.html` for optimal performance
-- **CSS Location**: All styles in `<style>` section (lines 27-405)
-- **JavaScript Location**: Minimal JS at bottom (lines 550-586)
-- **CSS Variables**: Design system controlled via CSS custom properties (lines 29-67)
-
-**When updating content:**
-1. **Styling**: All styling is embedded in the `<style>` section of index.html
-2. **Design System**: CSS variables at the top control colors, spacing, and responsive breakpoints
-3. **JavaScript**: Minimal and embedded at the bottom - only smooth scrolling and intersection observer
-4. **Mathematical Proportions**: Maintain golden ratio (1.618) and Fibonacci spacing when adding elements
-5. **Responsive Testing**: Test across mobile (320px), tablet (768px), and desktop (1200px+) breakpoints
-6. **Color Scheme**: Ensure new content follows cyberpunk purple/cyan/magenta theme
-7. **Performance**: Keep everything inline to minimize HTTP requests
-
-## Content Guidelines
-
-- **Professional Tone**: Technical expertise with approachable language
-- **Festival Chatbot**: Key portfolio piece - 5 festivals, 33 kimono tracking system
-- **International Focus**: English-language targeting for global clients
-- **Contact**: Primary CTA is email (dan@dataai.com)
-- **Agency Partnership**: Mention collaboration opportunities
-
-The site is designed to be easily maintainable as a single file while providing a professional, modern presentation that effectively showcases chatbot development expertise.
-
-## Key Technical Details
-
-**CSS Architecture:**
-- **Design System**: CSS custom properties define the entire design system (colors, spacing, typography)
-- **Grid System**: Mathematical CSS Grid with golden ratio proportions
-- **Animation System**: Performance-optimized CSS animations with reduced motion support
-- **Mobile-First**: Responsive design prioritizing mobile performance
-
-**JavaScript Functionality:**
-- **Smooth Scrolling**: Navigation link click handlers for smooth page transitions
-- **Intersection Observer**: Performance-optimized fade-in animations for cards
-- **Progressive Enhancement**: All features work without JavaScript
-
-**Performance Features:**
-- **Inline Everything**: CSS and JS embedded to eliminate HTTP requests
-- **Font Optimization**: Google Fonts with preconnect for faster loading
-- **Accessibility**: WCAG AA compliance with skip links and focus indicators
-- **SEO**: Complete meta tag implementation with Open Graph and Twitter Cards
+- Wrap app in `<ThemeProvider theme={original}>` from react95
+- Import `react95/dist/fonts/ms_sans_serif.woff2` for authentic fonts
+- Window components: `<Window>`, `<WindowHeader>`, `<WindowContent>`
+- Use `<Button>`, `<Toolbar>`, `<List>` for UI elements
