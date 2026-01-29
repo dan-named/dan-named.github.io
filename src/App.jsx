@@ -20,8 +20,6 @@ import aiMindsetBuilderContent from './content/portfolio/builder/aimindset.txt?r
 import aiMindsetEducatorContent from './content/portfolio/educator/aimindset.txt?raw'
 import edusonContent from './content/portfolio/educator/eduson.txt?raw'
 import yagoContent from './content/portfolio/educator/yago.txt?raw'
-// Recycle Bin
-import chatgptContent from './content/recyclebin/chatgpt.txt?raw'
 
 const AppContainer = styled.div`
   display: flex;
@@ -52,8 +50,6 @@ const FILE_CONTENTS = {
   aiMindsetEducator: aiMindsetEducatorContent,
   eduson: edusonContent,
   yago: yagoContent,
-  // Recycle Bin
-  chatgpt: chatgptContent,
 }
 
 const WINDOWS = {
@@ -132,12 +128,6 @@ const WINDOWS = {
     title: 'YAGO.txt - Notepad',
     component: Notepad,
     props: { filename: 'YAGO.txt', content: FILE_CONTENTS.yago }
-  },
-  chatgpt: {
-    id: 'chatgpt',
-    title: 'ChatGPT.txt - Notepad',
-    component: Notepad,
-    props: { filename: 'ChatGPT.txt', content: FILE_CONTENTS.chatgpt }
   },
 }
 
