@@ -1,4 +1,5 @@
-AI Mindset Course
-=================
+<b>tech partner / architect</b>
 
-test test
+Разрабатываю и поддерживаю систему Telegram-ботов для продажи участия в лабораториях и курсах. Настраиваю sales-автоматизации, community management автоматизации внутри каждой лаборатории и для сообщества AI Mindset Space. Настраиваю аналитику в PostHog. Работаю с архитектурой базы данных NocoDB, которая связана и с ботами, и с custom LMS.
+
+<a href="https://aimindset.org" target="_blank">https://aimindset.org</a>

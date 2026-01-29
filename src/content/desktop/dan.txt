@@ -1,12 +1,12 @@
-<h2>DAN.txt - Daniel Vasilyeu</h2>
+<b>Daniel Vasilyeu</b>
 
-Transforming offline and digital life through AI automation.
+Transforming offline and digital life through AI automation. 🌱
 
-<b>What I Do:</b>
+<b>What I Do</b>:
 • AI Chatbots
 • Business Process Automation
 • Custom Development
 • Education & Consulting
 
 <b>Subscribe:</b>
-<a href="https://t.me/vasilyeu" target="_blank">Telegram Channel</a>
+<a href="https://t.me/vasilyeu" target="_blank">https://t.me/vasilyeu</a>

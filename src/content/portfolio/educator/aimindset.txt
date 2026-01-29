@@ -1,5 +1,5 @@
-Co-author of AI Mindset AUTO Lab, 
+<b>co-author of AUTO Lab, speaker</b>
 
-https://aimindset.org/automation-lab
+Regularly do live demo about n8n as a part of other AI Mindset products.
 
-Regularry Do live demo about n8n as a part of other AI Mindset products
+<a href="https://aimindset.org/automation-lab" target="_blank">https://aimindset.org/automation-lab</a>

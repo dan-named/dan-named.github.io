@@ -1,4 +1,5 @@
-Eduson Project
-==============
+<b>teacher</b>
 
-test test
+Снял образовательное видео. Формат: предзаписанный курс theory + step by step demo с домашними заданиями. Блок посвящен теме автоматизации подготовки коммерческого предложения в рамках amoCRM и Битрикс24. Tech stack: n8n, Granola для транскрибации звонков, Zapier для связки Granola и Dropbox, Dropbox для корпоративной базы знаний как контекст в автоматизациях, OpenAI, CRM-системы Bitrix24/amoCRM и pdf.co для генерации PDF чистовика коммерческого предложения.
+
+<a href="https://eduson.academy/" target="_blank">https://eduson.academy/</a>
