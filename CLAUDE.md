@@ -2,26 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Plan & Review
-
-### Before starting work
-- Always enter plan mode first.
-- Write the plan to `.claude/tasks/TASK_NAME.md`.
-- The plan should include detailed implementation steps, reasoning, and task breakdown.
-- Research external packages/knowledge when needed (use Task tool).
-- Think MVP - don't over-plan.
-- Ask for review before proceeding. Do not continue until plan is approved.
-
 ## Project Overview
 
-Personal portfolio website for Dan AI (dan-ai.com) with Windows 95 retro aesthetic, hosted on GitHub Pages.
+Personal portfolio website for Daniel Vasilyeu (dan-ai.com) with Windows 95 retro aesthetic, hosted on GitHub Pages.
 
 ## Tech Stack
 
 - **React 18** + **Vite** - Build tooling
 - **React95** - Windows 95 UI component library
 - **styled-components** - CSS-in-JS styling
-- **GitHub Pages** - Hosting (custom domain: dan-ai.com)
+- **GitHub Pages** - Hosting via GitHub Actions
 
 ## Development Commands
 
@@ -34,30 +24,50 @@ npm run preview      # Preview production build locally
 
 ## Deployment
 
-GitHub Pages deploys from the `dist/` folder or via GitHub Actions. CNAME file configures `dan-ai.com`.
+Push to `main` triggers GitHub Actions workflow (`.github/workflows/deploy.yml`) which builds and deploys to GitHub Pages.
 
 ## Architecture
 
+### Window Management (App.jsx)
+
+- `openWindows` - Array of currently open window IDs
+- `windowOrder` - Separate array for z-index stacking order
+- `focusWindow()` - Brings window to front by moving it to end of `windowOrder`
+- `WINDOWS` config object maps window IDs to components and props
+
+### Content System
+
+Editable text files in `src/content/` are imported as raw strings (`?raw`) and rendered as HTML in Notepad windows:
+
 ```
-src/
-├── components/
-│   ├── Desktop.jsx       # Main desktop with draggable icons
-│   ├── Taskbar.jsx       # Windows 95 taskbar with Start menu
-│   └── windows/
-│       ├── AboutMe.jsx   # Bio/introduction window
-│       ├── Portfolio.jsx # Project showcase window
-│       └── CallWindow.jsx # Cal.com booking embed
-├── App.jsx               # Root component, window state management
-└── main.jsx              # Entry point with React95 theme provider
+src/content/
+├── desktop/
+│   └── dan.txt              → DAN.txt icon on desktop
+└── portfolio/
+    ├── builder/             → Files in Portfolio > builder folder
+    └── educator/            → Files in Portfolio > educator folder
 ```
 
-## Key Integrations
+**Content supports HTML**: `<b>`, `<a href="..." target="_blank">`, bullet points (•), arrows (→)
 
-- **Cal.com**: Booking widget embedded via iframe (`cal.com/dan-named/quick-start`)
+### Key Components
+
+- **Desktop.jsx** - Desktop icons (top-left) and Recycle Bin (bottom-right absolute positioned)
+- **Taskbar.jsx** - Start menu, window buttons, system tray with clock
+- **Portfolio.jsx** - Windows Explorer-style folder navigation with `FOLDER_STRUCTURE` config
+- **Notepad.jsx** - Renders HTML content via `dangerouslySetInnerHTML`
+- **Terminal.jsx** - Animated typing script about Dan AI
+- **CallWindow.jsx** - Cal.com booking iframe
+
+### Window Dragging
+
+All windows implement touch + mouse drag via:
+- `handleMouseDown` / `handleTouchStart` on header
+- Global `mousemove`/`touchmove` listeners during drag
+- Position stored in component state + parent via `onPositionChange`
 
 ## React95 Notes
 
 - Wrap app in `<ThemeProvider theme={original}>` from react95
-- Import `react95/dist/fonts/ms_sans_serif.woff2` for authentic fonts
+- Import fonts from `react95/dist/fonts/ms_sans_serif.woff2`
 - Window components: `<Window>`, `<WindowHeader>`, `<WindowContent>`
-- Use `<Button>`, `<Toolbar>`, `<List>` for UI elements

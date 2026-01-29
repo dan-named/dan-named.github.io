@@ -257,7 +257,9 @@ const FOLDER_STRUCTURE = {
     { id: 'eduson', name: 'Eduson.txt', type: 'file' },
     { id: 'yago', name: 'YAGO.txt', type: 'file' },
   ],
-  'C:\\Recycle Bin': [],
+  'C:\\Recycle Bin': [
+    { id: 'chatgpt', name: 'ChatGPT.txt', type: 'file' },
+  ],
 }
 
 function Portfolio({ title, onClose, onFocus, onOpenFile, isFocused, zIndex, position, onPositionChange, initialPath }) {
