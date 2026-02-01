@@ -6,6 +6,7 @@ import Notepad from './components/windows/Notepad'
 import Portfolio from './components/windows/Portfolio'
 import CallWindow from './components/windows/CallWindow'
 import Terminal from './components/windows/Terminal'
+import Minesweeper from './components/windows/Minesweeper'
 
 // Import text content from editable files
 // Folder structure mirrors where files appear in the system
@@ -80,6 +81,11 @@ const WINDOWS = {
     title: 'Recycle Bin',
     component: Portfolio,
     props: { initialPath: 'C:\\Recycle Bin' }
+  },
+  minesweeper: {
+    id: 'minesweeper',
+    title: 'Minesweeper',
+    component: Minesweeper
   },
   mamaPapaBaby: {
     id: 'mamaPapaBaby',

@@ -270,6 +270,10 @@ function Taskbar({ openWindows, focusedWindow, onWindowClick, onOpenWindow }) {
                     📁 Portfolio
                   </StyledMenuItem>
                   <Separator />
+                  <StyledMenuItem onClick={() => handleMenuItemClick('minesweeper')}>
+                    💣 Minesweeper
+                  </StyledMenuItem>
+                  <Separator />
                   <StyledMenuItem onClick={() => handleMenuItemClick('call')}>
                     📞 Book a Call
                   </StyledMenuItem>
