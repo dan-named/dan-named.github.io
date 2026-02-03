@@ -7,6 +7,7 @@ import Portfolio from './components/windows/Portfolio'
 import CallWindow from './components/windows/CallWindow'
 import Terminal from './components/windows/Terminal'
 import Minesweeper from './components/windows/Minesweeper'
+import Paint from './components/windows/Paint'
 
 // Import text content from editable files
 // Folder structure mirrors where files appear in the system
@@ -86,6 +87,11 @@ const WINDOWS = {
     id: 'minesweeper',
     title: 'Minesweeper',
     component: Minesweeper
+  },
+  paint: {
+    id: 'paint',
+    title: 'Paint',
+    component: Paint
   },
   mamaPapaBaby: {
     id: 'mamaPapaBaby',

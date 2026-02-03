@@ -182,6 +182,28 @@ const MinesweeperIcon = () => (
   </IconImage>
 )
 
+// Windows 95 Paint icon
+const PaintIcon = () => (
+  <IconImage>
+    <svg width="48" height="48" viewBox="0 0 48 48" style={{ imageRendering: 'pixelated' }}>
+      {/* Palette */}
+      <ellipse cx="24" cy="28" rx="18" ry="14" fill="#FFFF00" stroke="#000000" strokeWidth="2"/>
+      {/* Thumb hole */}
+      <ellipse cx="14" cy="32" rx="4" ry="3" fill="#c0c0c0" stroke="#000000" strokeWidth="1"/>
+      {/* Paint blobs */}
+      <circle cx="20" cy="22" r="4" fill="#FF0000"/>
+      <circle cx="30" cy="20" r="4" fill="#0000FF"/>
+      <circle cx="36" cy="28" r="3" fill="#00FF00"/>
+      <circle cx="32" cy="34" r="3" fill="#FF00FF"/>
+      <circle cx="22" cy="34" r="3" fill="#00FFFF"/>
+      {/* Brush handle */}
+      <rect x="30" y="4" width="6" height="16" fill="#8B4513" stroke="#000000" strokeWidth="1" transform="rotate(30 33 12)"/>
+      {/* Brush tip */}
+      <polygon points="38,18 42,24 36,26" fill="#000000"/>
+    </svg>
+  </IconImage>
+)
+
 // Windows 95 Recycle Bin icon (empty) - authentic
 const RecycleBinIcon = () => (
   <IconImage>
@@ -275,6 +297,7 @@ const topIcons = [
   { id: 'call', label: 'Book a Call', IconComponent: PhoneIcon },
   { id: 'terminal', label: 'Terminal', IconComponent: TerminalIcon },
   { id: 'minesweeper', label: 'Minesweeper', IconComponent: MinesweeperIcon },
+  { id: 'paint', label: 'Paint', IconComponent: PaintIcon },
 ]
 
 function Desktop({ onOpenWindow }) {
