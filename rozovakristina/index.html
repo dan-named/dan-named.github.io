@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Gift for Kristina</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0015;
+      overflow: hidden;
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      color: #2a1a3e;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    #white-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #trigger-text {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      text-align: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      pointer-events: none;
+    }
+
+    #trigger-text.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #trigger-text h1 {
+      font-size: clamp(1.6rem, 5vw, 2.8rem);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      color: #1a0a2e;
+    }
+
+    #trigger-text .tap-hint {
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: #9a8ab0;
+      animation: pulse-hint 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-hint {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* ---- Gift content on white background ---- */
+    #gift-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #gift-content.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .gift-container {
+      max-width: 640px;
+      width: 92%;
+      margin: 0 auto;
+      padding: 2.5rem 0 3rem;
+    }
+
+    /* Main invitation card */
+    .main-card {
+      background: linear-gradient(135deg, #f8f4ff 0%, #fff9f0 100%);
+      border: 1px solid #e8ddf0;
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 24px rgba(100, 60, 140, 0.06);
+    }
+
+    .main-card .icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .main-card h2 {
+      font-size: clamp(1.4rem, 4.5vw, 2rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      color: #2a1a3e;
+      line-height: 1.4;
+    }
+
+    .main-card .description {
+      font-size: clamp(1rem, 2.8vw, 1.15rem);
+      line-height: 1.8;
+      color: #5a4a6e;
+      margin-bottom: 1.8rem;
+    }
+
+    .main-card .highlight {
+      display: inline-block;
+      margin: 0.8rem 0 1.5rem;
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      color: #7a5a9e;
+      font-style: italic;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-weight: 500;
+    }
+
+    .cta-btn.primary {
+      background: linear-gradient(135deg, #7a5a9e, #a87acc);
+      color: white;
+    }
+
+    .cta-btn.primary:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 20px rgba(122, 90, 158, 0.3);
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: #7a5a9e;
+      border: 1.5px solid #d4c4e8;
+    }
+
+    .cta-btn.secondary:hover {
+      background: #f8f4ff;
+      transform: scale(1.03);
+    }
+
+    .from-line {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #b8a8cc;
+      font-style: italic;
+    }
+
+    /* Lessons section */
+    .lessons-title {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 400;
+      color: #9a8ab0;
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.6rem;
+    }
+
+    @media (max-width: 480px) {
+      .lessons-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+      }
+    }
+
+    .lesson-card {
+      aspect-ratio: 1;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      background: linear-gradient(135deg, #f0eaff 0%, #fdf6ff 100%);
+      border: 1.5px solid #e0d4f0;
+      transition: all 0.3s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lesson-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(168, 122, 204, 0.08), rgba(212, 165, 116, 0.05));
+      border-radius: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .lesson-card:hover::before {
+      opacity: 1;
+    }
+
+    .lesson-card .lesson-num {
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-weight: 500;
+      color: #7a5a9e;
+      line-height: 1;
+    }
+
+    .lesson-card .lesson-time {
+      font-size: clamp(0.55rem, 1.8vw, 0.7rem);
+      color: #b8a8cc;
+      letter-spacing: 0.03em;
+    }
+
+    .lesson-card .lesson-status {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #c8b8e0;
+      margin-top: 0.1rem;
+    }
+
+    .lesson-card.active .lesson-status {
+      background: #a87acc;
+      box-shadow: 0 0 6px rgba(168, 122, 204, 0.4);
+    }
+
+    /* Completed state for future use */
+    .lesson-card.completed {
+      background: linear-gradient(135deg, #f0f8f0, #f8fff8);
+      border-color: #c8e0c8;
+    }
+
+    .lesson-card.completed .lesson-num {
+      color: #6a9a6a;
+    }
+
+    .lesson-card.completed .lesson-status {
+      background: #7ab87a;
+      box-shadow: 0 0 6px rgba(122, 184, 122, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="portal"></canvas>
+  <div id="white-overlay"></div>
+
+  <div id="trigger-text">
+    <h1>Кристина,<br>тебе подарок от Max Pertsovskiy</h1>
+    <div class="tap-hint">нажми, чтобы открыть</div>
+  </div>
+
+  <div id="gift-content">
+    <div class="gift-container">
+      <div class="main-card">
+        <div class="icon">&#10022;</div>
+        <h2>Добро пожаловать<br>в мир AI-созидания</h2>
+        <p class="description">
+          Тебя ждёт увлекательное путешествие, где технологии
+          становятся продолжением творчества и интуиции.
+          <br><br>
+          10 персональных уроков с Даником Васильевым,
+          экспертом образовательного проекта AI Mindset.
+          <br><br>
+          Путь от точки ноль до готовых прототипов &mdash;
+          сайт, приложение, закрытое сообщество.
+        </p>
+        <div class="highlight">Теперь тебе доступно Всё</div>
+        <div class="cta-buttons">
+          <a href="https://t.me/dan_named" target="_blank" class="cta-btn primary">Написать Данику</a>
+          <a href="https://cal.com/dan-named/quick-start" target="_blank" class="cta-btn secondary">Забронировать звонок</a>
+        </div>
+        <p class="from-line">с любовью, от Макса</p>
+      </div>
+
+      <div class="lessons-title">Твои 10 уроков</div>
+      <div class="lessons-grid">
+        <div class="lesson-card active">
+          <div class="lesson-num">1</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">2</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">3</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">4</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">5</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">6</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">7</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">8</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">9</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">10</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('portal');
+    const ctx = canvas.getContext('2d');
+    let w, h, cx, cy;
+    let time = 0;
+    // 0 = geometry intro, 1 = glow expanding to white, 2 = white + trigger, 3 = gift on white
+    let phase = 0;
+    let introStart = performance.now();
+    let glowStart = 0;
+    const whiteOverlay = document.getElementById('white-overlay');
+
+    const stars = [];
+    function initStars() {
+      stars.length = 0;
+      for (let i = 0; i < 200; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.3,
+          speed: Math.random() * 0.3 + 0.1,
+          twinkle: Math.random() * Math.PI * 2,
+        });
+      }
+    }
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx = w / 2;
+      cy = h / 2;
+      initStars();
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function drawFlowerOfLife(centerX, centerY, radius, alpha, rotation) {
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(rotation);
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = '#d4a574';
+      ctx.lineWidth = 1.2;
+      ctx.shadowColor = '#ffd700';
+      ctx.shadowBlur = 15;
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i;
+        ctx.beginPath();
+        ctx.arc(Math.cos(angle) * radius, Math.sin(angle) * radius, radius, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.globalAlpha = alpha * 0.5;
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i + Math.PI / 6;
+        ctx.beginPath();
+        ctx.arc(Math.cos(angle) * radius * 1.732, Math.sin(angle) * radius * 1.732, radius, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.globalAlpha = alpha * 0.25;
+      for (let i = 0; i < 12; i++) {
+        const angle = (Math.PI / 6) * i;
+        ctx.beginPath();
+        ctx.arc(Math.cos(angle) * radius * 2, Math.sin(angle) * radius * 2, radius, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.shadowBlur = 0;
+      ctx.restore();
+    }
+
+    function drawPortal(centerX, centerY, radius, intensity, expandFactor, whiteness) {
+      expandFactor = expandFactor || 1;
+      whiteness = whiteness || 0;
+      const r = radius * expandFactor;
+
+      const outerR = Math.round(196 + 59 * whiteness);
+      const outerG = Math.round(160 + 95 * whiteness);
+      const baseAlpha = (0.15 + 0.85 * whiteness) * Math.min(intensity, 1);
+
+      // Very wide soft glow
+      const g1 = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r * 3);
+      g1.addColorStop(0, `rgba(255, 255, 255, ${baseAlpha})`);
+      g1.addColorStop(0.1, `rgba(255, 255, 255, ${baseAlpha * 0.95})`);
+      g1.addColorStop(0.25, `rgba(255, ${outerG}, 255, ${baseAlpha * 0.75})`);
+      g1.addColorStop(0.4, `rgba(${outerR}, ${outerG}, 255, ${baseAlpha * 0.5})`);
+      g1.addColorStop(0.55, `rgba(${outerR}, ${outerG}, 255, ${baseAlpha * 0.3})`);
+      g1.addColorStop(0.7, `rgba(${outerR}, ${outerG}, 255, ${baseAlpha * 0.15})`);
+      g1.addColorStop(0.85, `rgba(${outerR}, ${outerG}, 255, ${baseAlpha * 0.05})`);
+      g1.addColorStop(1, `rgba(${outerR}, ${outerG}, 255, 0)`);
+      ctx.fillStyle = g1;
+      ctx.fillRect(0, 0, w, h);
+
+      // Warm bright core
+      const coreAlpha = (0.3 + 0.7 * whiteness) * Math.min(intensity, 1);
+      const g2 = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r * 1.5);
+      g2.addColorStop(0, `rgba(255, 255, 255, ${coreAlpha})`);
+      g2.addColorStop(0.15, `rgba(255, 252, 245, ${coreAlpha * 0.85})`);
+      g2.addColorStop(0.35, `rgba(255, 245, 230, ${coreAlpha * 0.5})`);
+      g2.addColorStop(0.6, `rgba(255, 240, 255, ${coreAlpha * 0.2})`);
+      g2.addColorStop(0.85, `rgba(255, 240, 255, ${coreAlpha * 0.05})`);
+      g2.addColorStop(1, `rgba(255, 255, 255, 0)`);
+      ctx.fillStyle = g2;
+      ctx.fillRect(0, 0, w, h);
+
+      // Pulsing rings
+      if (whiteness < 0.4) {
+        const ringFade = 1 - whiteness / 0.4;
+        for (let i = 0; i < 3; i++) {
+          const ringPhase = (time * 0.5 + i * 2) % 6;
+          const ringRadius = r * 0.3 + ringPhase * r * 0.3;
+          const ringAlpha = Math.max(0, (1 - ringPhase / 6)) * 0.25 * intensity * ringFade;
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, ringRadius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${ringAlpha})`;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    function drawStars() {
+      for (const s of stars) {
+        s.twinkle += s.speed * 0.05;
+        const alpha = 0.3 + Math.sin(s.twinkle) * 0.3;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(240, 230, 255, ${alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function animate() {
+      time += 0.016;
+
+      if (phase >= 2) {
+        // White screen — stop drawing canvas
+        return;
+      }
+
+      ctx.clearRect(0, 0, w, h);
+
+      const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.7);
+      bg.addColorStop(0, '#1a0a2e');
+      bg.addColorStop(1, '#0a0015');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+
+      drawStars();
+
+      const baseRadius = Math.min(w, h) * 0.12;
+      const elapsed = (performance.now() - introStart) / 1000;
+
+      if (phase === 0) {
+        const drawIn = Math.min(1, elapsed / 2.5);
+        const portalGrow = Math.min(1, Math.max(0, (elapsed - 0.5) / 2));
+        const eased = 1 - Math.pow(1 - drawIn, 3);
+
+        drawPortal(cx, cy, baseRadius, portalGrow, 1 + Math.sin(time * 1.5) * 0.08, 0);
+        drawFlowerOfLife(cx, cy, baseRadius, eased * 0.7, time * 0.1);
+
+        if (elapsed > 3.0) {
+          phase = 1;
+          glowStart = performance.now();
+        }
+      } else if (phase === 1) {
+        const glowElapsed = (performance.now() - glowStart) / 1000;
+        const glowProgress = Math.min(1, glowElapsed / 1.2);
+        const t = glowProgress;
+        const easeGlow = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+        const geoAlpha = Math.max(0, 1 - easeGlow * 2.5) * 0.7;
+        if (geoAlpha > 0) {
+          drawFlowerOfLife(cx, cy, baseRadius, geoAlpha, time * 0.1);
+        }
+
+        const maxExpand = Math.sqrt(cx * cx + cy * cy) / (baseRadius * 2.5) + 1;
+        const expandFactor = 1 + easeGlow * maxExpand;
+
+        drawPortal(cx, cy, baseRadius, Math.min(1 + easeGlow * 2, 3), expandFactor, easeGlow);
+
+        if (glowProgress >= 1) {
+          phase = 2;
+          whiteOverlay.style.opacity = 1;
+          canvas.style.display = 'none';
+          document.getElementById('trigger-text').classList.add('visible');
+          return;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // Click handler — stay on white, show gift content
+    document.getElementById('trigger-text').addEventListener('click', () => {
+      if (phase !== 2) return;
+      phase = 3;
+      document.getElementById('trigger-text').style.transition = 'opacity 0.6s ease';
+      document.getElementById('trigger-text').classList.remove('visible');
+      setTimeout(() => {
+        document.getElementById('gift-content').classList.add('visible');
+      }, 600);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
