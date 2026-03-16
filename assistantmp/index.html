@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Gift for Katya</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0d1117;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1a2332;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    #white-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #trigger-text {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      text-align: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      pointer-events: none;
+    }
+
+    #trigger-text.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #trigger-text h1 {
+      font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.6;
+      color: #1a2332;
+    }
+
+    #trigger-text .tap-hint {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #8b95a5;
+      font-weight: 300;
+      animation: pulse-hint 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-hint {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* ---- Gift content on white background ---- */
+    #gift-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      background: #fafbfc;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #gift-content.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .gift-container {
+      max-width: 640px;
+      width: 92%;
+      margin: 0 auto;
+      padding: 2.5rem 0 3rem;
+    }
+
+    /* Main invitation card */
+    .main-card {
+      background: white;
+      border: 1px solid #e1e5ea;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .main-card .icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+
+    .main-card h2 {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: #1a2332;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+    }
+
+    .main-card .description {
+      font-size: clamp(0.95rem, 2.6vw, 1.05rem);
+      line-height: 1.8;
+      color: #4a5568;
+      margin-bottom: 1.8rem;
+      font-weight: 300;
+    }
+
+    .main-card .highlight {
+      display: inline-block;
+      margin: 0.6rem 0 1.5rem;
+      font-size: clamp(0.9rem, 2.4vw, 1rem);
+      color: #3b82f6;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: clamp(0.9rem, 2.4vw, 1rem);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-weight: 500;
+    }
+
+    .cta-btn.primary {
+      background: #1a2332;
+      color: white;
+    }
+
+    .cta-btn.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(26, 35, 50, 0.2);
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: #1a2332;
+      border: 1.5px solid #d1d5db;
+    }
+
+    .cta-btn.secondary:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .from-line {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      font-weight: 300;
+    }
+
+    /* Lessons section */
+    .lessons-title {
+      font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+      font-weight: 500;
+      color: #9ca3af;
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.6rem;
+    }
+
+    @media (max-width: 480px) {
+      .lessons-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+      }
+    }
+
+    .lesson-card {
+      aspect-ratio: 1;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      background: white;
+      border: 1.5px solid #e5e7eb;
+      transition: all 0.3s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lesson-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 2px 12px rgba(59, 130, 246, 0.08);
+    }
+
+    .lesson-card .lesson-num {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      font-weight: 600;
+      color: #1a2332;
+      line-height: 1;
+    }
+
+    .lesson-card .lesson-time {
+      font-size: clamp(0.55rem, 1.8vw, 0.7rem);
+      color: #9ca3af;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+    }
+
+    .lesson-card .lesson-status {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #d1d5db;
+      margin-top: 0.1rem;
+    }
+
+    .lesson-card.active .lesson-status {
+      background: #3b82f6;
+      box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
+    }
+
+    .lesson-card.completed {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+
+    .lesson-card.completed .lesson-num {
+      color: #16a34a;
+    }
+
+    .lesson-card.completed .lesson-status {
+      background: #16a34a;
+      box-shadow: 0 0 6px rgba(22, 163, 74, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="portal"></canvas>
+  <div id="white-overlay"></div>
+
+  <div id="trigger-text">
+    <h1>Катя,<br>тебе подарок от Max Pertsovskiy</h1>
+    <div class="tap-hint">нажми, чтобы открыть</div>
+  </div>
+
+  <div id="gift-content">
+    <div class="gift-container">
+      <div class="main-card">
+        <div class="icon">&#9670;</div>
+        <h2>Персональные консультации<br>по AI-инструментам</h2>
+        <p class="description">
+          10 индивидуальных сессий с Даником Васильевым,
+          экспертом образовательного проекта AI Mindset.
+          <br><br>
+          Автоматизация рутины, работа с AI-ассистентами,
+          создание рабочих прототипов &mdash; сайт, приложение,
+          боты и системы под ваши задачи.
+          <br><br>
+          Всё, что нужно, чтобы работать быстрее и эффективнее.
+        </p>
+        <div class="highlight">Полный курс уже доступен</div>
+        <div class="cta-buttons">
+          <a href="https://t.me/dan_named" target="_blank" class="cta-btn primary">Написать Данику</a>
+          <a href="https://cal.com/dan-named/quick-start" target="_blank" class="cta-btn secondary">Забронировать звонок</a>
+        </div>
+        <p class="from-line">от Макса</p>
+      </div>
+
+      <div class="lessons-title">10 консультаций</div>
+      <div class="lessons-grid">
+        <div class="lesson-card active">
+          <div class="lesson-num">1</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">2</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">3</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">4</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">5</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">6</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">7</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">8</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">9</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+        <div class="lesson-card active">
+          <div class="lesson-num">10</div>
+          <div class="lesson-time">1.5 ч</div>
+          <div class="lesson-status"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('portal');
+    const ctx = canvas.getContext('2d');
+    let w, h, cx, cy;
+    let time = 0;
+    let phase = 0;
+    let introStart = performance.now();
+    let glowStart = 0;
+    const whiteOverlay = document.getElementById('white-overlay');
+
+    // Floating geometric nodes for corporate feel
+    const nodes = [];
+    const connections = [];
+
+    function initNodes() {
+      nodes.length = 0;
+      connections.length = 0;
+      const count = Math.floor(Math.min(w, h) / 18);
+      for (let i = 0; i < count; i++) {
+        nodes.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 2 + 1,
+          pulse: Math.random() * Math.PI * 2,
+        });
+      }
+    }
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      cx = w / 2;
+      cy = h / 2;
+      initNodes();
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    function drawNetwork(alpha) {
+      const connectDist = Math.min(w, h) * 0.18;
+
+      // Update node positions
+      for (const n of nodes) {
+        n.x += n.vx;
+        n.y += n.vy;
+        n.pulse += 0.02;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      }
+
+      // Draw connections
+      ctx.lineWidth = 0.8;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectDist) {
+            const lineAlpha = (1 - dist / connectDist) * 0.25 * alpha;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(96, 165, 250, ${lineAlpha})`;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      for (const n of nodes) {
+        const glow = 0.5 + Math.sin(n.pulse) * 0.3;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(147, 197, 253, ${glow * alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function drawCentralGlow(intensity, expandFactor, whiteness) {
+      expandFactor = expandFactor || 1;
+      whiteness = whiteness || 0;
+      const baseRadius = Math.min(w, h) * 0.12;
+      const r = baseRadius * expandFactor;
+
+      const coreAlpha = (0.2 + 0.8 * whiteness) * Math.min(intensity, 1);
+
+      // Wide ambient glow
+      const g1 = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 3);
+      g1.addColorStop(0, `rgba(255, 255, 255, ${coreAlpha})`);
+      g1.addColorStop(0.15, `rgba(219, 234, 254, ${coreAlpha * 0.8})`);
+      g1.addColorStop(0.35, `rgba(147, 197, 253, ${coreAlpha * 0.4})`);
+      g1.addColorStop(0.55, `rgba(96, 165, 250, ${coreAlpha * 0.2})`);
+      g1.addColorStop(0.75, `rgba(59, 130, 246, ${coreAlpha * 0.08})`);
+      g1.addColorStop(1, 'rgba(59, 130, 246, 0)');
+      ctx.fillStyle = g1;
+      ctx.fillRect(0, 0, w, h);
+
+      // Bright center
+      const g2 = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 1.2);
+      g2.addColorStop(0, `rgba(255, 255, 255, ${coreAlpha})`);
+      g2.addColorStop(0.3, `rgba(241, 245, 249, ${coreAlpha * 0.6})`);
+      g2.addColorStop(0.6, `rgba(226, 232, 240, ${coreAlpha * 0.2})`);
+      g2.addColorStop(1, 'rgba(226, 232, 240, 0)');
+      ctx.fillStyle = g2;
+      ctx.fillRect(0, 0, w, h);
+
+      // Subtle rings
+      if (whiteness < 0.4) {
+        const ringFade = 1 - whiteness / 0.4;
+        for (let i = 0; i < 2; i++) {
+          const ringPhase = (time * 0.4 + i * 3) % 6;
+          const ringRadius = r * 0.3 + ringPhase * r * 0.35;
+          const ringAlpha = Math.max(0, (1 - ringPhase / 6)) * 0.15 * intensity * ringFade;
+          ctx.beginPath();
+          ctx.arc(cx, cy, ringRadius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(148, 163, 184, ${ringAlpha})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Hexagonal grid pattern (corporate/tech aesthetic)
+    function drawHexGrid(alpha) {
+      const size = Math.min(w, h) * 0.06;
+      const cols = Math.ceil(w / (size * 1.5)) + 2;
+      const rows = Math.ceil(h / (size * Math.sqrt(3))) + 2;
+
+      ctx.strokeStyle = `rgba(51, 65, 85, ${alpha * 0.15})`;
+      ctx.lineWidth = 0.6;
+
+      for (let row = -1; row < rows; row++) {
+        for (let col = -1; col < cols; col++) {
+          const offsetX = col * size * 1.5;
+          const offsetY = row * size * Math.sqrt(3) + (col % 2 ? size * Math.sqrt(3) / 2 : 0);
+
+          const dist = Math.sqrt((offsetX - cx) ** 2 + (offsetY - cy) ** 2);
+          const maxDist = Math.sqrt(cx * cx + cy * cy);
+          const fadeFactor = Math.max(0, 1 - dist / (maxDist * 0.7));
+
+          if (fadeFactor <= 0) continue;
+
+          ctx.globalAlpha = fadeFactor * alpha * 0.3;
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = (Math.PI / 3) * i - Math.PI / 6;
+            const px = offsetX + size * 0.4 * Math.cos(angle);
+            const py = offsetY + size * 0.4 * Math.sin(angle);
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function animate() {
+      time += 0.016;
+
+      if (phase >= 2) return;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Dark corporate background
+      const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * 0.7);
+      bg.addColorStop(0, '#1e293b');
+      bg.addColorStop(1, '#0d1117');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+
+      const elapsed = (performance.now() - introStart) / 1000;
+
+      if (phase === 0) {
+        const drawIn = Math.min(1, elapsed / 2.5);
+        const portalGrow = Math.min(1, Math.max(0, (elapsed - 0.5) / 2));
+        const eased = 1 - Math.pow(1 - drawIn, 3);
+
+        drawHexGrid(eased * 0.6);
+        drawNetwork(eased * 0.8);
+        drawCentralGlow(portalGrow, 1 + Math.sin(time * 1.2) * 0.06, 0);
+
+        if (elapsed > 3.0) {
+          phase = 1;
+          glowStart = performance.now();
+        }
+      } else if (phase === 1) {
+        const glowElapsed = (performance.now() - glowStart) / 1000;
+        const glowProgress = Math.min(1, glowElapsed / 1.2);
+        const t = glowProgress;
+        const easeGlow = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+        const netAlpha = Math.max(0, 1 - easeGlow * 2);
+        if (netAlpha > 0) {
+          drawHexGrid(netAlpha * 0.6);
+          drawNetwork(netAlpha * 0.8);
+        }
+
+        const maxExpand = Math.sqrt(cx * cx + cy * cy) / (Math.min(w, h) * 0.12 * 2.5) + 1;
+        const expandFactor = 1 + easeGlow * maxExpand;
+
+        drawCentralGlow(Math.min(1 + easeGlow * 2, 3), expandFactor, easeGlow);
+
+        if (glowProgress >= 1) {
+          phase = 2;
+          whiteOverlay.style.opacity = 1;
+          canvas.style.display = 'none';
+          document.getElementById('trigger-text').classList.add('visible');
+          return;
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    document.getElementById('trigger-text').addEventListener('click', () => {
+      if (phase !== 2) return;
+      phase = 3;
+      document.getElementById('trigger-text').style.transition = 'opacity 0.6s ease';
+      document.getElementById('trigger-text').classList.remove('visible');
+      setTimeout(() => {
+        document.getElementById('gift-content').classList.add('visible');
+      }, 600);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

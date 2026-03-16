@@ -11,6 +11,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         rozovakristina: resolve(__dirname, 'rozovakristina/index.html'),
+        assistantmp: resolve(__dirname, 'assistantmp/index.html'),
       },
     },
   },
