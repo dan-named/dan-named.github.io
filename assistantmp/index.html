@@ -275,21 +275,189 @@
     }
 
     .lesson-card.completed {
-      background: #f0fdf4;
-      border-color: #bbf7d0;
+      background: #0a2a1a;
+      border-color: rgba(0, 255, 100, 0.4);
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 255, 100, 0.25), inset 0 0 15px rgba(0, 255, 100, 0.08);
+    }
+
+    .lesson-card.completed:hover {
+      box-shadow: 0 0 30px rgba(0, 255, 100, 0.4), inset 0 0 20px rgba(0, 255, 100, 0.12);
+      border-color: rgba(0, 255, 100, 0.6);
     }
 
     .lesson-card.completed .lesson-num {
-      color: #16a34a;
+      color: #00ff64;
+    }
+
+    .lesson-card.completed .lesson-time {
+      color: rgba(0, 255, 100, 0.6);
     }
 
     .lesson-card.completed .lesson-status {
-      background: #16a34a;
-      box-shadow: 0 0 6px rgba(22, 163, 74, 0.3);
+      background: #00ff64;
+      box-shadow: 0 0 8px rgba(0, 255, 100, 0.6);
+    }
+    #password-gate {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #password-gate.hidden {
+      display: none;
+    }
+
+    #password-input {
+      font-family: inherit;
+      font-size: 1.1rem;
+      padding: 0.8rem 1.5rem;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 10px;
+      outline: none;
+      text-align: center;
+      width: 200px;
+      transition: border-color 0.3s ease;
+    }
+
+    #password-input:focus {
+      border-color: #3b82f6;
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 50;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .popup-overlay.visible {
+      display: flex;
+    }
+
+    .popup-card {
+      background: white;
+      border-radius: 16px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #9ca3af;
+      line-height: 1;
+      padding: 0.2rem 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .popup-close:hover {
+      color: #1a2332;
+    }
+
+    .popup-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .popup-date {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      font-weight: 400;
+    }
+
+    .popup-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #1a2332;
+      margin-top: 0.3rem;
+    }
+
+    .popup-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .popup-section h4 {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+
+    .popup-section p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #4a5568;
+      font-weight: 300;
+    }
+
+    .popup-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .popup-section ul li {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #4a5568;
+      font-weight: 300;
+      padding-left: 1.2rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+    }
+
+    .popup-section ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #3b82f6;
+    }
+
+    .popup-actions {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .popup-download {
+      display: inline-flex;
+      font-size: 0.9rem;
+      width: auto;
     }
   </style>
 </head>
 <body>
+  <div id="password-gate">
+    <input type="password" id="password-input" placeholder="Пароль" autocomplete="off" />
+  </div>
   <canvas id="portal"></canvas>
   <div id="white-overlay"></div>
 
@@ -375,7 +543,57 @@
     </div>
   </div>
 
+  <div id="session-popup" class="popup-overlay">
+    <div class="popup-card">
+      <button class="popup-close">&times;</button>
+      <div class="popup-header">
+        <span class="popup-date"></span>
+        <h3 class="popup-title"></h3>
+      </div>
+      <div class="popup-section">
+        <h4>Саммари</h4>
+        <p class="popup-summary"></p>
+      </div>
+      <div class="popup-section">
+        <h4>Что обсудили</h4>
+        <ul class="popup-topics"></ul>
+      </div>
+      <div class="popup-section">
+        <h4>Задачи на подумать</h4>
+        <ul class="popup-tasks"></ul>
+      </div>
+      <div class="popup-actions">
+        <a class="popup-download cta-btn secondary" download>Скачать транскрипт</a>
+      </div>
+    </div>
+  </div>
+
   <script>
+    const PASSWORD = 'vibe';
+    const STORAGE_KEY = 'katya_access';
+
+    function checkAccess() {
+      return localStorage.getItem(STORAGE_KEY) === PASSWORD;
+    }
+
+    function grantAccess() {
+      localStorage.setItem(STORAGE_KEY, PASSWORD);
+      document.getElementById('password-gate').classList.add('hidden');
+      startApp();
+    }
+
+    if (checkAccess()) {
+      document.getElementById('password-gate').classList.add('hidden');
+      startApp();
+    } else {
+      document.getElementById('password-input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && e.target.value === PASSWORD) {
+          grantAccess();
+        }
+      });
+    }
+
+    function startApp() {
     const canvas = document.getElementById('portal');
     const ctx = canvas.getContext('2d');
     let w, h, cx, cy;
@@ -611,6 +829,68 @@
     });
 
     animate();
+
+    // --- Session data loading ---
+    let sessionsData = [];
+
+    async function loadSessions() {
+      try {
+        const res = await fetch('data/sessions.json');
+        if (!res.ok) return;
+        sessionsData = await res.json();
+        updateLessonCards();
+      } catch (e) {
+        // No data yet — all cards stay default
+      }
+    }
+
+    function updateLessonCards() {
+      const cards = document.querySelectorAll('.lesson-card');
+      cards.forEach((card, index) => {
+        const sessionId = index + 1;
+        const session = sessionsData.find(s => s.id === sessionId);
+        if (session) {
+          card.classList.remove('active');
+          card.classList.add('completed');
+          card.addEventListener('click', () => openPopup(session));
+        }
+      });
+    }
+
+    function openPopup(session) {
+      const popup = document.getElementById('session-popup');
+      popup.querySelector('.popup-date').textContent = session.date;
+      popup.querySelector('.popup-title').textContent = session.title;
+      popup.querySelector('.popup-summary').textContent = session.summary;
+
+      const topicsList = popup.querySelector('.popup-topics');
+      topicsList.innerHTML = session.topics.map(t => '<li>' + t + '</li>').join('');
+
+      const tasksList = popup.querySelector('.popup-tasks');
+      tasksList.innerHTML = session.tasks.map(t => '<li>' + t + '</li>').join('');
+
+      const downloadLink = popup.querySelector('.popup-download');
+      if (session.transcript) {
+        downloadLink.href = 'data/' + session.transcript;
+        downloadLink.style.display = '';
+      } else {
+        downloadLink.style.display = 'none';
+      }
+
+      popup.classList.add('visible');
+    }
+
+    function closePopup() {
+      document.getElementById('session-popup').classList.remove('visible');
+    }
+
+    document.querySelector('.popup-close').addEventListener('click', closePopup);
+    document.getElementById('session-popup').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closePopup();
+    });
+
+    loadSessions();
+    } // end startApp
   </script>
 </body>
 </html>
