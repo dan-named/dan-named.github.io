@@ -1,0 +1,37 @@
+Meeting Title: Quick start between Dan V. and Ekaterina
+Date: Mar 23, 2026
+Meeting participants: Dan V., Kramarevaekaterina1
+
+Темы сессии:
+- Настройка интеграции Claude Code с Google Calendar API
+- Google Cloud Console: создание проекта, включение Calendar API
+- OAuth 2.0: consent screen, credentials, авторизация
+- Понятия API и JSON
+- MCP-сервер для подключения AI-агента к сервисам
+- Первый успешный запрос событий из календаря
+
+Ключевые моменты:
+
+Катя пришла с идеей: автоматизировать напоминания из Google Calendar. У неё много событий, которые нужно чекать за 12–48 часов — хочет, чтобы система сама напоминала и отправляла сообщения.
+
+Дан показал пример своего рабочего дня: Claude Code через Telegram-бота распределил задачи из task-tracker'а по календарю с учётом приоритетов, закрытые задачи отмечал галочками.
+
+Настройка интеграции:
+1. Авторизация в Claude Code (login successful)
+2. Google Cloud Console → создание проекта → включение Google Calendar API
+3. OAuth consent screen → external → test mode
+4. Создание OAuth client (desktop app) → скачивание credentials.json
+5. Claude Code создал MCP-сервер на JavaScript для работы с Google Calendar
+6. Прошли OAuth flow — получили authorization code
+7. Добавили тестового пользователя в Google Console
+8. Перезапустили Claude Code → успешно получили события из календаря
+
+Объяснение концепций:
+- API (Application Programming Interface) — программный интерфейс, позволяющий делать то же самое что через UI, но без визуального интерфейса, через запросы
+- JSON — структура данных с фигурными скобками, внутри пары ключ-значение (client_id, client_secret и т.д.)
+- MCP (Model Context Protocol) — протокол взаимодействия AI-агентов с внешними сервисами
+
+Домашнее задание:
+- Расшарить второй Google-календарь (рабочий/ассистентский) на основную почту
+- Проверить что Claude Code видит оба календаря
+- Попробовать описать Claude Code желаемый user flow для автоматизации напоминаний

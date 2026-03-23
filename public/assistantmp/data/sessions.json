@@ -35,5 +35,26 @@
       "Попробовать пообщаться с Claude из терминала — просто поспрашивать что угодно"
     ],
     "transcript": "transcripts/session-2.txt"
+  },
+  {
+    "id": 3,
+    "date": "2026-03-23",
+    "title": "Интеграция с Google Calendar",
+    "summary": "Настроили интеграцию Claude Code с Google Calendar API на MacBook Кати. Прошли полный путь: создание проекта в Google Cloud Console, OAuth consent screen, credentials, авторизация и запуск MCP-сервера. Катя увидела свои события из календаря прямо в терминале. Разобрали понятия API и JSON.",
+    "topics": [
+      "Идея автоматизации: напоминания из Google Calendar за N часов до события",
+      "Google Cloud Console — создание проекта, включение Calendar API",
+      "OAuth 2.0 — consent screen, credentials, client ID и client secret",
+      "Что такое API (Application Programming Interface) — интерфейс для программ vs интерфейс для людей",
+      "Что такое JSON — структура данных с парами ключ-значение",
+      "MCP-сервер (Model Context Protocol) — как AI-агенты подключаются к сервисам",
+      "Первый успешный запрос: получение событий календаря из терминала"
+    ],
+    "tasks": [
+      "Расшарить второй Google-календарь (рабочий) на основную почту с полным доступом",
+      "Проверить, что Claude Code видит события из обоих календарей",
+      "Попробовать пообщаться с Claude Code о своих идеях по автоматизации — описать желаемый user flow"
+    ],
+    "transcript": "transcripts/session-3.txt"
   }
 ]
