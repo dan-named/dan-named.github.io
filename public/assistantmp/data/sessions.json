@@ -78,5 +78,26 @@
       "На следующей сессии: настройка VPS на Digital Ocean вместе"
     ],
     "transcript": "transcripts/session-4.txt"
+  },
+  {
+    "id": 5,
+    "date": "2026-03-27",
+    "title": "TickTick, VPS и Telegram-бот",
+    "summary": "Макс так и не дал доступ к рабочему календарю — Катя отправила follow-up. Настроили интеграцию Claude Code с TickTick через OAuth. Зарегистрировались на Digital Ocean, создали дроплет (Ubuntu 24.04, 2GB, $12/мес), подключились по SSH. Спроектировали архитектуру Telegram-бота: бесконечная сессия Claude Code на VPS + Dropbox-синхронизация Obsidian. Начали установку Dropbox.",
+    "topics": [
+      "Google Calendar — follow-up Максу, доступ всё ещё не получен",
+      "TickTick — API-интеграция через OAuth: developer console, client ID/secret, redirect URL",
+      "/init — команда для создания CLAUDE.md, передача контекста между сессиями",
+      "VPS на Digital Ocean — регистрация, создание дроплета, подключение по SSH с паролем",
+      "Telegram-бот — архитектура: бесконечная сессия Claude Code + dangerously-skip-permissions + watchdog",
+      "Dropbox — синхронизация Obsidian между Mac и VPS, daily-заметки"
+    ],
+    "tasks": [
+      "Продолжить настройку VPS по чек-листу (tmux, Claude Code, watchdog)",
+      "Настроить Dropbox на VPS для синхронизации Obsidian",
+      "Запустить Telegram-бота с бесконечной сессией Claude Code",
+      "Дожать Макса по Google Calendar"
+    ],
+    "transcript": "transcripts/session-5.txt"
   }
 ]
