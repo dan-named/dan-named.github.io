@@ -99,5 +99,29 @@
       "Дожать Макса по Google Calendar"
     ],
     "transcript": "transcripts/session-5.txt"
+  },
+  {
+    "id": 6,
+    "date": "2026-03-31",
+    "title": "Запуск Telegram-бота на VPS",
+    "summary": "Катя самостоятельно начала настройку бота по инструкции — Claude Code предлагал альтернативу без VPS, но Дан объяснил необходимость серверного backend. Настроили SSH-ключи для VPS, запустили Claude Code в режиме dangerously-skip-permissions из папки Obsidian. Telegram-бот заработал — первый успешный интерактивный AI-ответ. Начали переносить авторизации (TickTick, Calendar) с Mac на VPS. До Dropbox-синхронизации не добрались.",
+    "topics": [
+      "Frontend vs Backend Telegram-бота — BotFather создаёт frontend, backend должен жить на VPS 24/7",
+      "SSH-ключи — беспарольное подключение к VPS вместо пароля",
+      "Два терминала одновременно — Mac + VPS, breakthrough-техника при залипании агента",
+      "Claude Code на VPS — dangerously-skip-permissions из папки Obsidian-хранилища",
+      "Telegram-бот запущен — первый интерактивный AI-ответ из бота",
+      "Перенос авторизаций Mac → VPS — credentials для TickTick, Google Calendar",
+      "Долгоживущие токены — как избежать повторных авторизаций на VPS",
+      "Декларация намерения — важность описания конечной цели, а не только технических шагов"
+    ],
+    "tasks": [
+      "Завершить перенос авторизаций на VPS (TickTick, Google Calendar)",
+      "Настроить долгоживущие токены — спросить у Claude Code, как избежать повторных авторизаций",
+      "Запустить /init на VPS с описанием текущей рабочей конфигурации",
+      "Настроить watchdog-скрипт для автоперезапуска сессии Claude Code",
+      "Дан пришлёт инструкцию по Dropbox-синхронизации Obsidian"
+    ],
+    "transcript": "transcripts/session-6.txt"
   }
 ]
